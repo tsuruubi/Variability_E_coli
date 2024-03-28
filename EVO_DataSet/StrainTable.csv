@@ -1,0 +1,19 @@
+﻿Strain name,Pathogenicity,Phylogroup,Transcriptome
+MG1655,Commensal,A,Yes
+HS,Commensal,A,Yes
+E1114,,A,Yes
+E1167,,B1,Yes
+H120,ExPEC,B1,Yes
+TA054,Commensal,E,Yes
+TA447,Commensal,E,Yes
+E101,,E,Yes
+41-1Ti9,InPEC,D,Yes
+TA280,Commensal,D,Yes
+M114,Commensal,D,Yes
+TA249,Commensal,D,Yes
+ROAR8,Commensal,F,Yes
+JJ1886,ExPEC,B2,Yes
+CFT073,ExPEC,B2,
+APECO1,ExPEC,B2,
+UTI89,ExPEC,B2,Yes
+S88,ExPEC,B2,Yes

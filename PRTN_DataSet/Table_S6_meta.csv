@@ -1,0 +1,79 @@
+﻿Col_name,Col_nb,Unit,Media,New_Col_name
+Uniprot Accession,1,,,
+Description,2,,,
+Gene,3,,,
+Peptides.used.for.quantitation,4,,,
+Confidence.score,5,,,
+Molecular weight (Da),6,,,
+Dataset,7,,,
+Glucose,8,protein copies per cell,Glucose,Glucose
+LB,9,protein copies per cell,LB,LB
+Glycerol + AA,10,protein copies per cell,Glycerol + AA,Glycerol_AA
+Acetate,11,protein copies per cell,Acetate,Acetate
+Fumarate,12,protein copies per cell,Fumarate,Fumarate
+Glucosamine,13,protein copies per cell,Glucosamine,Glucosamine
+Glycerol,14,protein copies per cell,Glycerol,Glycerol
+Pyruvate,15,protein copies per cell,Pyruvate,Pyruvate
+Chemostat µ=0.5,16,protein copies per cell,Chemostat µ=0.5,Chemostat_0_50
+Chemostat µ=0.35,17,protein copies per cell,Chemostat µ=0.35,Chemostat_0_35
+Chemostat µ=0.20,18,protein copies per cell,Chemostat µ=0.20,Chemostat_0_20
+Chemostat µ=0.12,19,protein copies per cell,Chemostat µ=0.12,Chemostat_0_12
+Stationary phase 1 day,20,protein copies per cell,Stationary phase 1 day,Stationary_1d
+Stationary phase 3 days,21,protein copies per cell,Stationary phase 3 days,Stationary_3d
+Osmotic-stress glucose,22,protein copies per cell,Osmotic-stress glucose,Osmotic
+42°C glucose,23,protein copies per cell,42°C glucose,42C
+pH6 glucose,24,protein copies per cell,pH6 glucose,pH6
+Xylose,25,protein copies per cell,Xylose,Xylose
+Mannose,26,protein copies per cell,Mannose,Mannose
+Galactose ,27,protein copies per cell,Galactose ,Galactose 
+Succinate,28,protein copies per cell,Succinate,Succinate
+Fructose,29,protein copies per cell,Fructose,Fructose
+Glucose,30,protein mass per cell,Glucose,
+LB,31,protein mass per cell,LB,
+Glycerol + AA,32,protein mass per cell,Glycerol + AA,
+Acetate,33,protein mass per cell,Acetate,
+Fumarate,34,protein mass per cell,Fumarate,
+Glucosamine,35,protein mass per cell,Glucosamine,
+Glycerol,36,protein mass per cell,Glycerol,
+Pyruvate,37,protein mass per cell,Pyruvate,
+Chemostat µ=0.5,38,protein mass per cell,Chemostat µ=0.5,
+Chemostat µ=0.35,39,protein mass per cell,Chemostat µ=0.35,
+Chemostat µ=0.20,40,protein mass per cell,Chemostat µ=0.20,
+Chemostat µ=0.12,41,protein mass per cell,Chemostat µ=0.12,
+Stationary phase 1 day,42,protein mass per cell,Stationary phase 1 day,
+Stationary phase 3 days,43,protein mass per cell,Stationary phase 3 days,
+Osmotic-stress glucose,44,protein mass per cell,Osmotic-stress glucose,
+42°C glucose,45,protein mass per cell,42°C glucose,
+pH6 glucose,46,protein mass per cell,pH6 glucose,
+Xylose,47,protein mass per cell,Xylose,
+Mannose,48,protein mass per cell,Mannose,
+Galactose ,49,protein mass per cell,Galactose ,
+Succinate,50,protein mass per cell,Succinate,
+Fructose,51,protein mass per cell,Fructose,
+Glucose,52,CV,Glucose,
+LB,53,CV,LB,
+Glycerol + AA,54,CV,Glycerol + AA,
+Acetate,55,CV,Acetate,
+Fumarate,56,CV,Fumarate,
+Glucosamine,57,CV,Glucosamine,
+Glycerol,58,CV,Glycerol,
+Pyruvate,59,CV,Pyruvate,
+Chemostat µ=0.5,60,CV,Chemostat µ=0.5,
+Chemostat µ=0.35,61,CV,Chemostat µ=0.35,
+Chemostat µ=0.20,62,CV,Chemostat µ=0.20,
+Chemostat µ=0.12,63,CV,Chemostat µ=0.12,
+Stationary phase 1 day,64,CV,Stationary phase 1 day,
+Stationary phase 3 days,65,CV,Stationary phase 3 days,
+Osmotic-stress glucose,66,CV,Osmotic-stress glucose,
+42°C glucose,67,CV,42°C glucose,
+pH6 glucose,68,CV,pH6 glucose,
+Xylose,69,CV,Xylose,
+Mannose,70,CV,Mannose,
+Galactose ,71,CV,Galactose ,
+Succinate,72,CV,Succinate,
+Fructose,73,CV,Fructose,
+Gene,74,,,
+Bnumber,75,,,Bnb
+Annotated functional COG groups (letter),76,,,
+Annotated functional COG group (description),77,,,
+Annotated functional COG class,78,,,

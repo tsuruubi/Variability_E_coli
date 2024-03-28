@@ -1,0 +1,161 @@
+"sample_ID","sample","rep_id","Strain.Description","Strain","Base.Media","Carbon.Source..g.L.","Nitrogen.Source..g.L.","Electron.Acceptor","Trace.Element.Mixture","Supplement","Temperature..C.","pH","Culture.Type","Growth.Rate..1.hr."
+"ecoli_00001","control__wt_glc__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","sauer trace element mixture","",37,7,"Batch",NA
+"ecoli_00002","control__wt_glc__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","sauer trace element mixture","",37,7,"Batch",NA
+"ecoli_00003","fur__wt_dpd__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","","DPD (0.2mM)",37,7,"Batch",0
+"ecoli_00004","fur__wt_dpd__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","","DPD (0.2mM)",37,7,"Batch",0
+"ecoli_00005","fur__wt_fe__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","","FeCl2 (0.1mM)",37,7,"Batch",1.06
+"ecoli_00006","fur__wt_fe__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","","FeCl2 (0.1mM)",37,7,"Batch",1.06
+"ecoli_00011","acid__wt_ph5__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","","",37,5.5,"Batch",NA
+"ecoli_00012","acid__wt_ph5__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","","",37,5.5,"Batch",NA
+"ecoli_00019","oxidative__wt_pq__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","","PQ (250uM)",37,7,"Batch",0
+"ecoli_00020","oxidative__wt_pq__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","","PQ (250uM)",37,7,"Batch",0
+"ecoli_00027","nac_ntrc__wt_csn__1",1,"Escherichia coli K-12 MG1655","MG1655","W2","glucose(2)","cytosine(2)","O2","","",37,7,"Batch",NA
+"ecoli_00028","nac_ntrc__wt_csn__2",2,"Escherichia coli K-12 MG1655","MG1655","W2","glucose(2)","cytosine(2)","O2","","",37,7,"Batch",NA
+"ecoli_00029","nac_ntrc__wt_cytd__1",1,"Escherichia coli K-12 MG1655","MG1655","W2","glucose(2)","cytidine(2)","O2","","",37,7,"Batch",NA
+"ecoli_00030","nac_ntrc__wt_cytd__2",2,"Escherichia coli K-12 MG1655","MG1655","W2","glucose(2)","cytidine(2)","O2","","",37,7,"Batch",NA
+"ecoli_00031","nac_ntrc__wt_gln__1",1,"Escherichia coli K-12 MG1655","MG1655","W2","glucose(2)","glutamine(2)","O2","","",37,7,"Batch",NA
+"ecoli_00032","nac_ntrc__wt_gln__2",2,"Escherichia coli K-12 MG1655","MG1655","W2","glucose(2)","glutamine(2)","O2","","",37,7,"Batch",NA
+"ecoli_00041","misc__wt_no_te__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","","",37,7,"Batch",NA
+"ecoli_00042","misc__wt_no_te__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","","",37,7,"Batch",NA
+"ecoli_00049","misc__nitr_031__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(10mM)","O2","sauer trace element mixture","",37,7,"Chemostat",NA
+"ecoli_00050","omics__wt_glu__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","sauer trace element mixture","glutamate (10mM)",37,7,"Batch",NA
+"ecoli_00051","omics__wt_glu__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","sauer trace element mixture","glutamate (10mM)",37,7,"Batch",NA
+"ecoli_00052","omics__wt_gly__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","sauer trace element mixture","glycine (10mM)",37,7,"Batch",NA
+"ecoli_00053","omics__wt_gly__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","sauer trace element mixture","glycine (10mM)",37,7,"Batch",NA
+"ecoli_00054","omics__wt_thr__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","sauer trace element mixture","threonine (10mM)",37,7,"Batch",NA
+"ecoli_00055","omics__wt_thr__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","sauer trace element mixture","threonine (10mM)",37,7,"Batch",NA
+"ecoli_00064","ompr__wt_nacl__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","","NaCl (0.3M)",37,7,"Batch",0
+"ecoli_00065","ompr__wt_nacl__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","","NaCl (0.3M)",37,7,"Batch",0
+"ecoli_00068","minspan__wt_ade__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","sauer trace element mixture","adenine (10mM)",37,7,"Batch",NA
+"ecoli_00070","minspan__wt_glc__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","sauer trace element mixture","",37,7,"Batch",NA
+"ecoli_00071","minspan__wt_glc__3",3,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","sauer trace element mixture","",37,7,"Batch",NA
+"ecoli_00072","minspan__wt_glc__4",4,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","sauer trace element mixture","",37,7,"Batch",NA
+"ecoli_00073","minspan__wt_glc_anaero__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","","sauer trace element mixture","",37,7,"Batch",NA
+"ecoli_00074","minspan__wt_glc_anaero__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","","sauer trace element mixture","",37,7,"Batch",NA
+"ecoli_00075","minspan__wt_trp__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","sauer trace element mixture","L-tryptophan (20mg/L)",37,7,"Batch",NA
+"ecoli_00082","cra_crp__wt_ac__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","acetate(2)","NH4Cl(1)","O2","aebersold trace element mixture","",37,7,"Batch",0.25
+"ecoli_00083","cra_crp__wt_ac__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","acetate(2)","NH4Cl(1)","O2","aebersold trace element mixture","",37,7,"Batch",0.25
+"ecoli_00084","cra_crp__wt_fru__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","fructose(2)","NH4Cl(1)","O2","aebersold trace element mixture","",37,7,"Batch",0.53
+"ecoli_00085","cra_crp__wt_fru__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","fructose(2)","NH4Cl(1)","O2","aebersold trace element mixture","",37,7,"Batch",0.53
+"ecoli_00092","rpoB__wt_031__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","","",37,7,"Chemostat",NA
+"ecoli_00093","rpoB__wt_044__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","","",37,7,"Chemostat",NA
+"ecoli_00094","rpoB__wt_lb__1",1,"Escherichia coli K-12 MG1655","MG1655","LB","","","O2","","",37,7,"Batch",1.42
+"ecoli_00095","rpoB__wt_lb__2",2,"Escherichia coli K-12 MG1655","MG1655","LB","","","O2","","",37,7,"Batch",1.42
+"ecoli_00105","crp__wt_fru__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","fructose(2)","NH4Cl(1)","O2","sauer trace element mixture","",37,7,"Batch",NA
+"ecoli_00106","crp__wt_glyc__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glycerol(2)","NH4Cl(1)","O2","sauer trace element mixture","",37,7,"Batch",NA
+"ecoli_00107","crp__wt_glyc__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glycerol(2)","NH4Cl(1)","O2","sauer trace element mixture","",37,7,"Batch",NA
+"ecoli_00132","42c__wt_42c__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","sauer trace element mixture","",42,7,"Batch",0.82
+"ecoli_00142","ssw__wt_ac__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","acetate(4)","NH4Cl(1)","O2","sauer trace element mixture","",37,7,"Batch",0.27
+"ecoli_00143","ssw__wt_glc__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","sauer trace element mixture","",37,7,"Batch",0.73
+"ecoli_00144","ssw__wt_glyc__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glycerol(2.5)","NH4Cl(1)","O2","sauer trace element mixture","",37,7,"Batch",0.45
+"ecoli_00145","ssw__wt_xyl__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","xylose(4)","NH4Cl(1)","O2","sauer trace element mixture","",37,7,"Batch",0.55
+"ecoli_00169","ica__wt_glc__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","sauer trace element mixture","",37,7,"Batch",0.58
+"ecoli_00170","ica__wt_glc__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","sauer trace element mixture","",37,7,"Batch",0.58
+"ecoli_00171","ica__wt_glc__3",3,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","sauer trace element mixture","",37,7,"Batch",0.66
+"ecoli_00172","ica__wt_glc__4",4,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","sauer trace element mixture","",37,7,"Batch",0.66
+"ecoli_00173","ica__arg_sbt__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","sorbitol(4)","NH4Cl(1)","O2","sauer trace element mixture","L-arginine (5.75mM)",37,7,"Batch",0.27
+"ecoli_00174","ica__arg_sbt__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","sorbitol(4)","NH4Cl(1)","O2","sauer trace element mixture","L-arginine (5.75mM)",37,7,"Batch",0.27
+"ecoli_00175","ica__cytd_rib__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","D-ribose(4)","NH4Cl(1)","O2","sauer trace element mixture","cytidine (1mM)",37,7,"Batch",0.31
+"ecoli_00176","ica__cytd_rib__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","D-ribose(4)","NH4Cl(1)","O2","sauer trace element mixture","cytidine (1mM)",37,7,"Batch",0.31
+"ecoli_00177","ica__gth__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","sauer trace element mixture w/o MgSO4","glutathione (1mM)",37,7,"Batch",0.07
+"ecoli_00178","ica__gth__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","sauer trace element mixture w/o MgSO4","glutathione (1mM)",37,7,"Batch",0.07
+"ecoli_00179","ica__leu_glcr__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucarate(4)","NH4Cl(1)","O2","sauer trace element mixture","leucine (10mM)",37,7,"Batch",0.29
+"ecoli_00180","ica__leu_glcr__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucarate(4)","NH4Cl(1)","O2","sauer trace element mixture","leucine (10mM)",37,7,"Batch",0.29
+"ecoli_00181","ica__met_glc__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","sauer trace element mixture","methionine (5mM)",37,7,"Batch",0.74
+"ecoli_00182","ica__met_glc__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","sauer trace element mixture","methionine (5mM)",37,7,"Batch",0.74
+"ecoli_00183","ica__no3_anaero__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","KNO3(20mM)","sauer trace element mixture","",37,7,"Batch",0.35
+"ecoli_00184","ica__no3_anaero__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","KNO3(20mM)","sauer trace element mixture","",37,7,"Batch",0.35
+"ecoli_00185","ica__phe_acgam__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","N-acetylglucosamine(4)","NH4Cl(1)","O2","sauer trace element mixture","phenylalanine (5mM)",37,7,"Batch",0.63
+"ecoli_00186","ica__phe_acgam__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","N-acetylglucosamine(4)","NH4Cl(1)","O2","sauer trace element mixture","phenylalanine (5mM)",37,7,"Batch",0.63
+"ecoli_00187","ica__thm_gal__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","galactose(4)","NH4Cl(1)","O2","sauer trace element mixture","thiamine (1uM)",37,7,"Batch",0.34
+"ecoli_00188","ica__thm_gal__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","galactose(4)","NH4Cl(1)","O2","sauer trace element mixture","thiamine (1uM)",37,7,"Batch",0.34
+"ecoli_00189","ica__tyr_glcn__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","gluconate(4)","NH4Cl(1)","O2","sauer trace element mixture","tyrosine (5mM)",37,7,"Batch",0.57
+"ecoli_00190","ica__tyr_glcn__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","gluconate(4)","NH4Cl(1)","O2","sauer trace element mixture","tyrosine (5mM)",37,7,"Batch",0.57
+"ecoli_00191","ica__ura_pyr__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","pyruvate(3.3)","NH4Cl(1)","O2","sauer trace element mixture","uracil (1 mM)",37,7,"Batch",0.27
+"ecoli_00192","ica__ura_pyr__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","pyruvate(3.3)","NH4Cl(1)","O2","sauer trace element mixture","uracil (1 mM)",37,7,"Batch",0.27
+"ecoli_00193","ica__wt_glc__5",5,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","sauer trace element mixture","",37,7,"Batch",0.63
+"ecoli_00194","ica__wt_glc__6",6,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","sauer trace element mixture","",37,7,"Batch",0.63
+"ecoli_00197","ica__ade_glc__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","sauer trace element mixture","adenine (100mg/L)",37,7,"Batch",0.78
+"ecoli_00198","ica__ade_glc__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","sauer trace element mixture","adenine (100mg/L)",37,7,"Batch",0.78
+"ecoli_00199","ytf__wt_glc__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","sauer trace element mixture","",37,7,"Batch",0.69
+"ecoli_00200","ytf__wt_glc__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","sauer trace element mixture","",37,7,"Batch",0.68
+"ecoli_00209","ytf__wt_ph5__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","sauer trace element mixture","",37,5.5,"Batch",0.49
+"ecoli_00210","ytf__wt_ph5__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","sauer trace element mixture","",37,5.5,"Batch",0.48
+"ecoli_00211","ytf__wt_ph8__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","sauer trace element mixture","",37,8.5,"Batch",0.65
+"ecoli_00212","ytf__wt_ph8__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","sauer trace element mixture","",37,8.5,"Batch",0.65
+"ecoli_00279","misc2__salc_glc__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","sauer trace element mixture","salicylate",37,7,"Batch",0.22
+"ecoli_00280","misc2__salc_glc__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","sauer trace element mixture","salicylate",37,7,"Batch",0.22
+"ecoli_00281","misc2__dbcn_glc__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","sauer trace element mixture","dibucaine",37,7,"Batch",0.32
+"ecoli_00282","misc2__dbcn_glc__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","sauer trace element mixture","dibucaine",37,7,"Batch",0.32
+"ecoli_00283","misc2__tyr_glc__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","sauer trace element mixture","tyrosine (5mM)",37,7,"Batch",0.77
+"ecoli_00284","misc2__tyr_glc__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","sauer trace element mixture","tyrosine (5mM)",37,7,"Batch",0.77
+"ecoli_00285","misc2__arg_cytd__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","sauer trace element mixture","cytidine (1mM) + arginine (5mM)",37,7,"Batch",0.67
+"ecoli_00286","misc2__arg_cytd__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(2)","NH4Cl(1)","O2","sauer trace element mixture","cytidine (1mM) + arginine (5mM)",37,7,"Batch",0.67
+"ecoli_00323","oxyR__wt_glc__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","","",37,7,"Batch",NA
+"ecoli_00324","oxyR__wt_glc__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","","",37,7,"Batch",NA
+"ecoli_00325","oxyR__wt_h2o2__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","","H2O2(2mM)",37,7,"Batch",NA
+"ecoli_00326","oxyR__wt_h2o2__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","","H2O2(2mM)",37,7,"Batch",NA
+"ecoli_00363","abx_media__m9_ctrl__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","sauer trace element mixture","",37,7,"Batch",NA
+"ecoli_00364","abx_media__m9_ctrl__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","sauer trace element mixture","",37,7,"Batch",NA
+"ecoli_00365","abx_media__rpmi_ctrl__1",1,"Escherichia coli K-12 MG1655","MG1655","RPMI+10%LB","","","O2","","",37,7,"Batch",NA
+"ecoli_00366","abx_media__rpmi_ctrl__2",2,"Escherichia coli K-12 MG1655","MG1655","RPMI+10%LB","","","O2","","",37,7,"Batch",NA
+"ecoli_00367","abx_media__camhb_ctrl__1",1,"Escherichia coli K-12 MG1655","MG1655","CAMHB","","","O2","","",37,7,"Batch",NA
+"ecoli_00368","abx_media__camhb_ctrl__2",2,"Escherichia coli K-12 MG1655","MG1655","CAMHB","","","O2","","",37,7,"Batch",NA
+"ecoli_00369","abx_media__m9_mero__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","sauer trace element mixture","meropenem(128ug/mL)",37,7,"Batch",NA
+"ecoli_00370","abx_media__m9_mero__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","sauer trace element mixture","meropenem(128ug/mL)",37,7,"Batch",NA
+"ecoli_00371","abx_media__rpmi_mero__1",1,"Escherichia coli K-12 MG1655","MG1655","RPMI+10%LB","","","O2","","meropenem(32ug/mL)",37,7,"Batch",NA
+"ecoli_00372","abx_media__rpmi_mero__2",2,"Escherichia coli K-12 MG1655","MG1655","RPMI+10%LB","","","O2","","meropenem(32ug/mL)",37,7,"Batch",NA
+"ecoli_00373","abx_media__camhb_mero__1",1,"Escherichia coli K-12 MG1655","MG1655","CAMHB","","","O2","","meropenem(256ug/mL)",37,7,"Batch",NA
+"ecoli_00374","abx_media__camhb_mero__2",2,"Escherichia coli K-12 MG1655","MG1655","CAMHB","","","O2","","meropenem(256ug/mL)",37,7,"Batch",NA
+"ecoli_00375","abx_media__m9_trisulf__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","sauer trace element mixture","trimethoprim-sulfamethoxazole(131mg/mL)",37,7,"Batch",NA
+"ecoli_00376","abx_media__m9_trisulf__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","sauer trace element mixture","trimethoprim-sulfamethoxazole(131mg/mL)",37,7,"Batch",NA
+"ecoli_00377","abx_media__rpmi_trisulf__1",1,"Escherichia coli K-12 MG1655","MG1655","RPMI+10%LB","","","O2","","trimethoprim-sulfamethoxazole(16mg/mL)",37,7,"Batch",NA
+"ecoli_00378","abx_media__rpmi_trisulf__2",2,"Escherichia coli K-12 MG1655","MG1655","RPMI+10%LB","","","O2","","trimethoprim-sulfamethoxazole(16mg/mL)",37,7,"Batch",NA
+"ecoli_00379","abx_media__camhb_trisulf__1",1,"Escherichia coli K-12 MG1655","MG1655","CAMHB","","","O2","","trimethoprim-sulfamethoxazole(16mg/mL)",37,7,"Batch",NA
+"ecoli_00380","abx_media__camhb_trisulf__2",2,"Escherichia coli K-12 MG1655","MG1655","CAMHB","","","O2","","trimethoprim-sulfamethoxazole(16mg/mL)",37,7,"Batch",NA
+"ecoli_00381","abx_media__m9_cef__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","sauer trace element mixture","ceftriaxone(4.1mg/mL)",37,7,"Batch",NA
+"ecoli_00382","abx_media__m9_cef__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","sauer trace element mixture","ceftriaxone(4.1mg/mL)",37,7,"Batch",NA
+"ecoli_00383","abx_media__rpmi_cef__1",1,"Escherichia coli K-12 MG1655","MG1655","RPMI+10%LB","","","O2","","ceftriaxone(256ug/mL)",37,7,"Batch",NA
+"ecoli_00384","abx_media__rpmi_cef__2",2,"Escherichia coli K-12 MG1655","MG1655","RPMI+10%LB","","","O2","","ceftriaxone(256ug/mL)",37,7,"Batch",NA
+"ecoli_00385","abx_media__camhb_cef__1",1,"Escherichia coli K-12 MG1655","MG1655","CAMHB","","","O2","","ceftriaxone(256ug/mL)",37,7,"Batch",NA
+"ecoli_00386","abx_media__camhb_cef__2",2,"Escherichia coli K-12 MG1655","MG1655","CAMHB","","","O2","","ceftriaxone(256ug/mL)",37,7,"Batch",NA
+"ecoli_00387","abx_media__m9_cipro__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","sauer trace element mixture","ciprofloxacin(32ug/mL)",37,7,"Batch",NA
+"ecoli_00388","abx_media__m9_cipro__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","sauer trace element mixture","ciprofloxacin(32ug/mL)",37,7,"Batch",NA
+"ecoli_00389","abx_media__rpmi_cipro__1",1,"Escherichia coli K-12 MG1655","MG1655","RPMI+10%LB","","","O2","","ciprofloxacin(64ug/mL)",37,7,"Batch",NA
+"ecoli_00390","abx_media__rpmi_cipro__2",2,"Escherichia coli K-12 MG1655","MG1655","RPMI+10%LB","","","O2","","ciprofloxacin(64ug/mL)",37,7,"Batch",NA
+"ecoli_00391","abx_media__camhb_cipro__1",1,"Escherichia coli K-12 MG1655","MG1655","CAMHB","","","O2","","ciprofloxacin(16ug/mL)",37,7,"Batch",NA
+"ecoli_00392","abx_media__camhb_cipro__2",2,"Escherichia coli K-12 MG1655","MG1655","CAMHB","","","O2","","ciprofloxacin(16ug/mL)",37,7,"Batch",NA
+"ecoli_00495","tcs__wt_01-kcl__1",1,"Escherichia coli K-12 MG1655","MG1655","TMA","glucose(4)","NH4Cl(0.535)","O2","","KCl(0.1mM)",37,7,"Batch",NA
+"ecoli_00496","tcs__wt_01-kcl__2",2,"Escherichia coli K-12 MG1655","MG1655","TMA","glucose(4)","NH4Cl(0.535)","O2","","KCl(0.1mM)",37,7,"Batch",NA
+"ecoli_00497","tcs__wt_01xlb__1",1,"Escherichia coli K-12 MG1655","MG1655","01xLB","","","O2","","",37,7,"Batch",NA
+"ecoli_00498","tcs__wt_01xlb__2",2,"Escherichia coli K-12 MG1655","MG1655","01xLB","","","O2","","",37,7,"Batch",NA
+"ecoli_00499","tcs__wt_115-kcl__1",1,"Escherichia coli K-12 MG1655","MG1655","TMA","glucose(4)","NH4Cl(0.535)","O2","","KCl(115mM)",37,7,"Batch",NA
+"ecoli_00500","tcs__wt_115-kcl__2",2,"Escherichia coli K-12 MG1655","MG1655","TMA","glucose(4)","NH4Cl(0.535)","O2","","KCl(115mM)",37,7,"Batch",NA
+"ecoli_00501","tcs__wt_CuSO4__1",1,"Escherichia coli K-12 MG1655","MG1655","LB","","","O2","","CuSO4(0.5mM)",37,7,"Batch",NA
+"ecoli_00502","tcs__wt_CuSO4__2",2,"Escherichia coli K-12 MG1655","MG1655","LB","","","O2","","CuSO4(0.5mM)",37,7,"Batch",NA
+"ecoli_00503","tcs__wt_etoh__1",1,"Escherichia coli K-12 MG1655","MG1655","LB","","","O2","","Ethanol(5%w/v)",37,7,"Batch",NA
+"ecoli_00504","tcs__wt_etoh__2",2,"Escherichia coli K-12 MG1655","MG1655","LB","","","O2","","Ethanol(5%w/v)",37,7,"Batch",NA
+"ecoli_00505","tcs__wt_lb__1",1,"Escherichia coli K-12 MG1655","MG1655","LB","","","O2","","",37,7,"Batch",NA
+"ecoli_00506","tcs__wt_lb__2",2,"Escherichia coli K-12 MG1655","MG1655","LB","","","O2","","",37,7,"Batch",NA
+"ecoli_00507","tcs__wt_LiAcet__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","","Acetoacetate/LiCl(10mM)",37,7,"Batch",NA
+"ecoli_00508","tcs__wt_LiAcet__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","","Acetoacetate/LiCl(10mM)",37,7,"Batch",NA
+"ecoli_00509","tcs__wt_LiCl__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","","LiCl(10mM)",37,7,"Batch",NA
+"ecoli_00510","tcs__wt_LiCl__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(4)","NH4Cl(1)","O2","","LiCl(10mM)",37,7,"Batch",NA
+"ecoli_00511","tcs__wt_m9p__1",1,"Escherichia coli K-12 MG1655","MG1655","M9P","glucose(4)","NH4Cl(1)","O2","","",37,7,"Batch",NA
+"ecoli_00512","tcs__wt_m9p__2",2,"Escherichia coli K-12 MG1655","MG1655","M9P","glucose(4)","NH4Cl(1)","O2","","",37,7,"Batch",NA
+"ecoli_00513","tcs__wt_pyr__1",1,"Escherichia coli K-12 MG1655","MG1655","01xLB","","","O2","","Pyruvate(100uM)",37,7,"Batch",NA
+"ecoli_00514","tcs__wt_pyr__2",2,"Escherichia coli K-12 MG1655","MG1655","01xLB","","","O2","","Pyruvate(100uM)",37,7,"Batch",NA
+"ecoli_00515","tcs__wt_zncl2__1",1,"Escherichia coli K-12 MG1655","MG1655","LB","","","O2","","ZnCl2(1mM)",37,7,"Batch",NA
+"ecoli_00516","tcs__wt_zncl2__2",2,"Escherichia coli K-12 MG1655","MG1655","LB","","","O2","","ZnCl2(1mM)",37,7,"Batch",NA
+"ecoli_00797","adnB__wt_adn__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(.2%)","NH4Cl(1)","O2","","adenosine()",37,7,"Batch",NA
+"ecoli_00798","adnB__wt_adn__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose(.2%)","NH4Cl(1)","O2","","adenosine()",37,7,"Batch",NA
+"ecoli_00818","ytf2__wt_glc__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose?","NH4Cl(1)","O2","","",37,7,"Batch",NA
+"ecoli_00819","ytf2__wt_glc__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose?","NH4Cl(1)","O2","","",37,7,"Batch",NA
+"ecoli_00834","ytf3__wt_glc2__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose","NH4Cl(1)","O2","sauer trace element mixture","",37,7,"Batch",NA
+"ecoli_00835","ytf3__wt_glc2__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose","NH4Cl(1)","O2","sauer trace element mixture","",37,7,"Batch",NA
+"ecoli_00836","ytf3__wt_pH7_lactate__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose","NH4Cl(1)","O2","sauer trace element mixture","lactic acid(5)",37,7,"Batch",NA
+"ecoli_00837","ytf3__wt_pH7_lactate__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose","NH4Cl(1)","O2","sauer trace element mixture","lactic acid(5)",37,7,"Batch",NA
+"ecoli_00838","ytf3__wt_pH55_lactate__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose","NH4Cl(1)","O2","sauer trace element mixture","lactic acid(5)",37,5.5,"Batch",NA
+"ecoli_00839","ytf3__wt_pH55_lactate__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose","NH4Cl(1)","O2","sauer trace element mixture","lactic acid(5)",37,5.5,"Batch",NA
+"ecoli_00840","ytf3__wt_pH55_HCl__1",1,"Escherichia coli K-12 MG1655","MG1655","M9","glucose","NH4Cl(1)","O2","sauer trace element mixture","HCl(3)",37,5.5,"Batch",NA
+"ecoli_00841","ytf3__wt_pH55_HCl__2",2,"Escherichia coli K-12 MG1655","MG1655","M9","glucose","NH4Cl(1)","O2","sauer trace element mixture","HCl(3)",37,5.5,"Batch",NA

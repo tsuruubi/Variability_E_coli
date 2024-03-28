@@ -1,0 +1,17 @@
+﻿regulator,regulator_label,Use
+CusR,"HprR,CusR",Yes
+GalR,"GalS,GalR",Yes
+GutM,"SrlR,GutM",Yes
+TdcA,"TdcR,TdcA",Yes
+MazE,"MazE-MazF,MazE",Yes
+RelB,"RelB-RelE,RelB",Yes
+HigA,"HigBA,HigA",Yes
+YefM,"YefM-YoeB,YefM",Yes
+HprR,"HprR,CusR",No
+GalS,"GalS,GalR",No
+SrlR,"SrlR,GutM",No
+TdcR,"TdcR,TdcA",No
+MazE-MazF,"MazE-MazF,MazE",No
+RelB-RelE,"RelB-RelE,RelB",No
+HigBA,"HigBA,HigA",No
+YefM-YoeB,"YefM-YoeB,YefM",No

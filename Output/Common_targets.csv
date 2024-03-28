@@ -1,0 +1,7 @@
+"gene","Bnb","Stressors","targets"
+"acrR","b0464","AF, ATP, CP, FTD, PHEN, PMZ, PUR, TET","acrA,acrB,acrR,flhC,flhD,marA,marB,marR,micF,soxR,soxS"
+"rcdA","b0846","AF","asr,bluF,csgD,csgE,csgF,csgG,rmf,rsd,sulA,yagK,ydeI,ybjJ,ybjI,rcdA"
+"mprA","b2684","CCCP, NIT, SXZ","acrA,acrB,emrA,emrB,mprA"
+"ompR","b3405","FTD","bolA,cadA,cadB,cadC,csgD,csgE,csgF,csgG,dtpA,ecnB,fadL,feoA,feoB,feoC,flhC,flhD,micF,ompC,omrA,omrB,pgaA,pgaB,pgaC,pgaD,sra,ompF,speFL,potE,speF,tsgA,tolC,sstT,rob,rhtA,pdhR,ompX,narU,lpp,gmhA,fadE,acrR"
+"soxR","b4063","PUR","aroF,fumC,sodA,soxR,soxS,tyrA,yjcB,yrbL"
+"rob","b4396","TET","acnA,acrA,acrB,acrZ,aldA,aslB,chaC,elaB,fadA,fadB,fadL,fumC,inaA,ldtB,marA,marB,marR,micF,mltF,nfo,nfsA,nfsB,rimK,rob,sodA,tolC,ybjC,ybjN,ygiB,ygiC,yiaG,zwf,yacH,ydcL,ybiT,mdtD,narG,glgS,yjcH,yhbO,fadD,astC,actP,acs,yhbW,mdaB,map,glnD,dapD"

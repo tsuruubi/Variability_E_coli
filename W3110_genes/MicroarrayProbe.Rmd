@@ -1,0 +1,384 @@
+---
+title: "Transcriptome Analysis of Mutation accumulation experiments"
+author: "Tsuru"
+date: "`r format(Sys.time(), '%Y/%m/%d')`"
+output: html_document
+---
+# General Settings
+## Workspace
+### Load workspace
+```{r workspace_load,warning=FALSE, message=FALSE}
+# load("./MicroarrayProbe.RData")
+```
+### Save workspace
+```{r workspace_save,warning=FALSE, message=FALSE}
+# save.image("./MicroarrayProbe.RData")
+```
+### Library loading
+```{r library,warning=FALSE, message=FALSE}
+library(viridis)
+library(ggplot2)
+library(GGally)
+library(scales)
+library(ggpubr)
+library(grid)
+library(gtable)
+library(gridExtra)
+library(dplyr)
+library(matrixStats)
+library(preprocessCore)
+library(RColorBrewer)
+library(openxlsx)
+library(ggsci)
+library(cowplot)
+library(corrplot)
+library(Hmisc)
+# https://stackoverflow.com/questions/59419647/hmisc-package-or-namespace-failed-to-load-no-package-called-latticeextra
+library(corrplot)
+library(tidyverse)
+library(magrittr)
+library(dendextend)
+library(FactoMineR)
+library(factoextra)
+library(proxy)
+library(rstatix)
+# library(plot3D)
+library(clusterProfiler)
+library(pathview)
+library(org.EcK12.eg.db)
+library(rvest)
+library(corrr)
+library(GOSemSim)
+library(rrvgo)
+library(qdapTools)
+library(AnnotationDbi)
+library(ggVennDiagram)
+library(rJava)
+library(venneuler)
+library(igraph)
+library(tidygraph)
+library(recoRdseq) # for Record-seq
+library(patchwork) # for Record-seq
+library(Biostrings)
+# library(BSgenome)
+# library(BSgenome.Ecoli.NCBI.20080805)
+# library(biomaRt)
+# library(biomartr)
+```
+### versatile user functions
+The [qw](https://ja.coder.work/so/r/240447) function in Perl.  
+The [createEmptyDf](https://htsuda.net/archives/2560) function.
+The [g_legend](https://github.com/hadley/ggplot2/wiki/Share-a-legend-between-two-ggplot2-graphs) function to extract legend.
+```{r functions}
+qw <- function(...) {
+  sapply(match.call()[-1], deparse)
+}
+
+createEmptyDf = function( nrow, ncol, colnames = c() ){
+  data.frame( matrix( vector(), nrow, ncol, dimnames = list( c(), colnames ) ) )
+}
+
+g_legend<-function(a.gplot){
+  tmp <- ggplot_gtable(ggplot_build(a.gplot))
+  leg <- which(sapply(tmp$grobs, function(x) x$name) == "guide-box")
+  legend <- tmp$grobs[[leg]]
+  return(legend)}
+
+pValue_sp_text=function(dtf){
+  pcor_sp<-cor.test(x=dtf[,1],y=dtf[,2],method="spearman")
+  rho_sp<-round(pcor_sp$estimate,digits = 2)
+  pv_sp<-ifelse(pcor_sp$p.value<0.05," P<0.05",paste(" P==",round(pcor_sp$p.value,digits = 1),sep = ""))
+  rhopvtxt_sp<-paste("list(italic(rho)==", rho_sp,", ",pv_sp,")")
+  return(rhopvtxt_sp)
+}
+
+pValue_pr_text=function(dtf){
+  pcor_pr<-cor.test(x=dtf[,1],y=dtf[,2],method="pearson")
+  r_pr<-round(pcor_pr$estimate,digits = 2)
+  pv_pr<-ifelse(pcor_pr$p.value<0.05," P<0.05",paste(" P==",round(pcor_pr$p.value,digits = 1),sep = ""))
+  rpvtxt_pr<-paste("list(italic(r)==", r_pr,", ",pv_pr,")")
+  return(rpvtxt_pr)
+}
+```
+
+#### Color
+```{r color}
+mycolpal<-get_palette("lancet",9)
+mycolpal.BuRd<-c(get_palette(palette = "Blues", 4)[2:4],get_palette(palette = "Reds", 4)[2:4])
+```
+
+#### Tutorial
+http://catway.jp/bioinformatics/etc/biostrings.html
+```{r Load_genome_seq,warning=FALSE, message=FALSE}
+w3110<-readDNAStringSet("AP009048.fa")
+dprobes<-as.data.frame(read.csv("MicroarrayProbeInfo.csv",stringsAsFactors = F))
+dprobes$Count=NA
+dprobes$Starts=NA
+dprobes$Ends=NA
+i<-1
+for(i in 1:nrow(dprobes)){
+  j<-0
+  rm(temp)
+  for(k in 1:2){
+    dnaseq<-DNAString(dprobes$Seq[i])
+    if(k==2){
+      dnaseq<-reverseComplement(dnaseq)
+    }
+    res<-vmatchPattern(dnaseq, w3110, max.mismatch = 0)
+    res<-as.data.frame(unlist(res))
+    if(nrow(res)>0){
+      if(j==0){
+        temp<-res
+      }else{
+        temp<-rbind(temp,res)
+        j<-j+1
+      }
+    }
+  }
+  dprobes$Count[i]<-nrow(temp)
+  if(nrow(temp)>0){
+    dprobes$Starts[i]<-paste(temp$start,collapse = ",")
+    dprobes$Ends[i]<-paste(temp$end,collapse = ",")
+  }
+}
+write.csv(dprobes,"dprobes_out.csv")
+```
+
+```{r Load_genome_seq,warning=FALSE, message=FALSE}
+temp<-dprobes[dprobes$Count!=1,]
+multihits<-unique(temp$Name)
+singlehits<-unique(dprobes[dprobes$Name %nin% multihits,]$Name)
+```
+
+```{r Load_genome_seq,warning=FALSE, message=FALSE}
+w3110_ftr<-read_delim("AP009048.gff3",skip=2)
+colnames(w3110_ftr)<-qw(ACCID,DB,Feature,Start,End,misc1,Strand,misc2,Notes)
+w3110_ftr$ECKJWB<-str_extract(w3110_ftr$Notes,"(ECK[0-9]{4}(\\+?))+:(JW(R?)[0-9]{4}(\\+?))+(:b[0-9]{4}(\\+?))*")
+w3110_ftr$ECKnb<-str_extract(w3110_ftr$ECKJWB,"(ECK[0-9]{4}(\\+?))+")
+w3110_ftr$JWnb<-str_extract(w3110_ftr$ECKJWB,"(JW(R?)[0-9]{4}(\\+?))+")
+w3110_ftr$Bnb<-str_extract(w3110_ftr$ECKJWB,"(b[0-9]{4}(\\+?))+")
+w3110_ftr$Parent<-str_remove(str_extract(w3110_ftr$Notes,"Parent=(.*?);"),"Parent=")
+w3110_ftr$Parent<-str_remove(w3110_ftr$Parent,";")
+w3110_ftr$ID<-str_remove(str_extract(w3110_ftr$Notes,"ID=(.*?);"),"ID=")
+w3110_ftr$ID<-str_remove(w3110_ftr$ID,";")
+w3110_ftr$gbkey<-str_remove(str_extract(w3110_ftr$Notes,"gbkey=(.*?);"),"gbkey=")
+w3110_ftr$gbkey<-str_remove(w3110_ftr$gbkey,";")
+w3110_ftr$gene<-str_remove(str_extract(w3110_ftr$Notes,"gene=(.*?);"),"gene=")
+w3110_ftr$gene<-str_remove(w3110_ftr$gene,";")
+w3110_ftr2<-w3110_ftr[!is.na(w3110_ftr$ECKJWB),]
+rownames(w3110_ftr2)<-seq(1,nrow(w3110_ftr2))
+
+w3110_ftr3<-data.frame(gene=unique(w3110_ftr2$gene),Count.gbkey=NA,Gbkeys=NA,IDs=NA,ECKnbs=NA,JWnbs=NA,Bnbs=NA)
+for(i in 1:nrow(w3110_ftr3)){
+  temp1<-w3110_ftr2[w3110_ftr2$gene==w3110_ftr3$gene[i],]
+  w3110_ftr3$Count.gbkey[i]<-nrow(temp1)
+  w3110_ftr3$Gbkeys[i]<-paste(temp1$gbkey,collapse=",")
+  w3110_ftr3$IDs[i]<-paste(temp1$ID,collapse=",")
+  w3110_ftr3$ECKnbs[i]<-paste(unique(temp1$ECKnb),collapse=",")
+  w3110_ftr3$JWnbs[i]<-paste(unique(temp1$JWnb),collapse=",")
+  w3110_ftr3$Bnbs[i]<-paste(unique(temp1$Bnb),collapse=",")
+}
+
+marray_out<-as.data.frame(read_csv("Data_20211027.csv"))
+marray_out<-data.frame(ProbeName=marray_out[,1])
+marray_out$Count<-NA
+for(i in 1:nrow(marray_out)){
+  marray_out$Count[i]<-nrow(marray_out[marray_out$ProbeName==marray_out$ProbeName[i],])
+}
+marray_out.u<-marray_out %>% distinct(ProbeName,.keep_all = T)
+marray_out.u<-left_join(marray_out.u,w3110_ftr3,by=c("ProbeName"="gene"))
+
+
+w3110_ftr3[w3110_ftr3$gene %nin% marray_out.u[!is.na(marray_out.u$IDs),]$ProbeName,]
+
+
+
+temp1<-marray_out.u[grepl("-",marray_out.u$ProbeName)|grepl("_",marray_out.u$ProbeName),]
+temp2<-list()
+for(i in 1:nrow(temp1)){
+  temp2[[i]]<-str_split(temp1$ProbeName[i],"-")[[1]][1]
+  temp2[[i]]<-str_split(temp2[[i]],"_")[[1]][1]
+}
+temp2<-unique(unlist(temp2))
+
+
+marray_out.u.1<-marray_out.u[(is.na(marray_out.u$IDs))|(marray_out.u$ProbeName %in% temp2)|(marray_out.u$Count>1),]
+
+```
+
+## Singlehits
+```{r Load_genome_seq,warning=FALSE, message=FALSE}
+temp<-dprobes[dprobes$Name %in% singlehits,]
+rownames(temp)<-seq(1,nrow(temp))
+temp$Starts<-as.numeric(temp$Starts)
+temp$Ends<-as.numeric(temp$Ends)
+temp$ECKnb<-NA
+temp$JWnb<-NA
+temp$Bnb<-NA
+i<-1
+for(i in 1:nrow(temp)){
+  temp1<-w3110_ftr2[(w3110_ftr2$Start<=temp$Starts[i])&(w3110_ftr2$Start<=temp$Ends[i])&(w3110_ftr2$End>=temp$Starts[i])&(w3110_ftr2$End>=temp$Ends[i]),]
+  temp1.1<-temp1$ECKnb
+  temp1.1<-temp1.1[!is.na(temp1.1)]
+  if(length(temp1.1)>0){
+    temp1.1<-paste(unique(temp1.1),collapse=",")
+    temp$ECKnb[i]<-temp1.1
+  }
+  temp1.2<-temp1$JWnb
+  temp1.2<-temp1.2[!is.na(temp1.2)]
+  if(length(temp1.2)>0){
+    temp1.2<-paste(unique(temp1.2),collapse=",")
+    temp$JWnb[i]<-temp1.2
+  }
+  temp1.3<-temp1$Bnb
+  temp1.3<-temp1.3[!is.na(temp1.3)]
+  if(length(temp1.3)>0){
+    temp1.3<-paste(unique(temp1.3),collapse=",")
+    temp$Bnb[i]<-temp1.3
+  }
+}
+
+cure1<-as.data.frame(read_csv("Cure_1.csv"))
+temp1<-temp[temp$Bnb %in% unique(temp[grepl(",",temp$Bnb),]$Bnb),]
+temp2<-temp1 %>% distinct(Name,.keep_all = T)
+for(i in 1:nrow(temp2)){
+  temp1[temp1$Name==temp2$Name[i],]$ECKnb<-cure1[cure1$Name==temp2$Name[i],]$ECKnb
+  temp1[temp1$Name==temp2$Name[i],]$JWnb<-cure1[cure1$Name==temp2$Name[i],]$JWnb
+  temp1[temp1$Name==temp2$Name[i],]$Bnb<-cure1[cure1$Name==temp2$Name[i],]$Bnb
+}
+
+temp<-bind_rows(temp[temp$Order %nin% temp1$Order,],temp1)
+
+
+# 
+# i<-1652
+# w3110_ftr2[(w3110_ftr2$Start<=temp$Starts[i])&(w3110_ftr2$Start<=temp$Ends[i])&(w3110_ftr2$End>=temp$Starts[i])&(w3110_ftr2$End>=temp$Ends[i]),]
+
+
+
+dsingle<-data.frame(Name=singlehits,Count=NA,ECKnb=NA,JWnb=NA,Bnb=NA)
+i<-1
+for(i in 1:nrow(dsingle)){
+  temp1<-unique(temp[temp$Name==dsingle$Name[i],]$ECKnb)
+  temp1<-temp1[!is.na(temp1)]
+  dsingle$Count[i]<-length(temp1)
+  if(length(temp1)>0){
+    dsingle$ECKnb[i]<-unique(temp1)
+  }
+  temp1<-unique(temp[temp$Name==dsingle$Name[i],]$JWnb)
+  temp1<-temp1[!is.na(temp1)]
+  if(length(temp1)>0){
+    dsingle$JWnb[i]<-unique(temp1)
+  }
+  temp1<-unique(temp[temp$Name==dsingle$Name[i],]$Bnb)
+  temp1<-temp1[!is.na(temp1)]
+  if(length(temp1)>0){
+    dsingle$Bnb[i]<-unique(temp1)
+  }
+}
+
+temp1<-temp[temp$Name %in% dsingle[dsingle$Count==2,]$Name,]
+temp2<-temp1 %>% distinct(Name,.keep_all = T)
+cure2<-as.data.frame(read_csv("Cure_2.csv"))
+
+dsingle<-bind_rows(dsingle[dsingle$Name %nin% temp1$Name,],cure2[,which(colnames(cure2) %in% colnames(dsingle))])
+
+temp3<-dsingle[dsingle$Name %in% marray_out.u.1$ProbeName,]
+marray_out.u.1$ECKnb<-NA
+marray_out.u.1$JWnb<-NA
+marray_out.u.1$Bnb<-NA
+for(i in 1:nrow(temp3)){
+  marray_out.u.1[marray_out.u.1$ProbeName==temp3$Name[i],]$ECKnb<-temp3$ECKnb[i]
+  marray_out.u.1[marray_out.u.1$ProbeName==temp3$Name[i],]$JWnb<-temp3$JWnb[i]
+  marray_out.u.1[marray_out.u.1$ProbeName==temp3$Name[i],]$Bnb<-temp3$Bnb[i]
+}
+
+cure3<-as.data.frame(read_csv("Cure_3.csv"))
+
+marray_out.u.2<-marray_out.u[marray_out.u$ProbeName %nin% marray_out.u.1$ProbeName,]
+temp<-marray_out.u.1[,which(colnames(marray_out.u.1) %nin% qw(ECKnbs,JWnbs,Bnbs,ECKnb,JWnb,Bnb))]
+temp<-left_join(temp,cure3[,which(colnames(cure3) %in% qw(ProbeName,ECKnb,JWnb,Bnb))],by="ProbeName")
+colnames(temp)[colnames(temp)=="ECKnb"]<-"ECKnbs"
+colnames(temp)[colnames(temp)=="JWnb"]<-"JWnbs"
+colnames(temp)[colnames(temp)=="Bnb"]<-"Bnbs"
+marray_out.u.2<-bind_rows(marray_out.u.2,temp)
+marray_out.u.2$IStag<-F
+marray_out.u.2[grepl("^ins",marray_out.u.2$ProbeName)|grepl("IS[0-9]{3}",marray_out.u.2$ProbeName),]$IStag<-T
+
+write.csv(marray_out.u.2,"Probe2IDs.csv") #<--------------------------------------------------------------------- OUTPUT
+```
+
+## Mulitplehits
+```{r Load_genome_seq,warning=FALSE, message=FALSE}
+temp<-dprobes[dprobes$Name %in% multihits,]
+rownames(temp)<-seq(1,nrow(temp))
+temp$ECKnb<-NA
+temp$JWnb<-NA
+temp$Bnb<-NA
+i<-209
+for(i in 1:nrow(temp)){
+  temp1<-as.numeric(unlist(str_split(temp$Starts[i],",")))
+  temp2<-as.numeric(unlist(str_split(temp$Ends[i],",")))
+  temp4.1<-list()
+  temp4.2<-list()
+  temp4.3<-list()
+  j<-1
+  for(j in 1:length(temp1)){
+    temp3<-w3110_ftr2[(w3110_ftr2$Start<=temp1[j])&(w3110_ftr2$Start<=temp2[j])&(w3110_ftr2$End>=temp1[j])&(w3110_ftr2$End>=temp2[j]),]
+    temp3.1<-temp3$ECKnb
+    temp3.1<-temp3.1[!is.na(temp3.1)]
+    # print(temp3.1)
+    if(length(temp3.1)>0){
+      # print(j)
+      temp4.1[[j]]<-paste(unique(temp3.1),collapse=",")
+    }
+    temp3.2<-temp3$JWnb
+    temp3.2<-temp3.2[!is.na(temp3.2)]
+    if(length(temp3.2)>0){
+      # print(paste(unique(temp3.2),collapse=","))
+      temp4.2[[j]]<-paste(unique(temp3.2),collapse=",")
+    }
+    temp3.3<-temp3$Bnb
+    temp3.3<-temp3.3[!is.na(temp3.3)]
+    if(length(temp3.3)>0){
+      temp4.3[[j]]<-paste(unique(temp3.3),collapse=",")
+    }
+  }
+  if(length(temp4.1)>0){
+    temp$ECKnb[i]<-paste(unlist(temp4.1),collapse="@")
+  }
+  if(length(temp4.2)>0){
+    temp$JWnb[i]<-paste(unlist(temp4.2),collapse="@")
+   }
+  if(length(temp4.3)>0){
+    temp$Bnb[i]<-paste(unlist(temp4.3),collapse="@")
+  }
+}
+
+# i<-209
+# w3110_ftr2[(w3110_ftr2$Start<=temp$Starts[i])&(w3110_ftr2$Start<=temp$Ends[i])&(w3110_ftr2$End>=temp$Starts[i])&(w3110_ftr2$End>=temp$Ends[i]),]
+
+
+
+
+dmulti<-data.frame(Name=multihits,Count=NA,ECKnb=NA,JWnb=NA,Bnb=NA)
+i<-1
+for(i in 1:nrow(dmulti)){
+  temp1<-unique(temp[temp$Name==dmulti$Name[i],]$ECKnb)
+  temp1<-temp1[!is.na(temp1)]
+  dmulti$Count[i]<-length(temp1)
+  if(length(temp1)>0){
+    dmulti$ECKnb[i]<-unique(temp1)
+  }
+  temp1<-unique(temp[temp$Name==dmulti$Name[i],]$JWnb)
+  temp1<-temp1[!is.na(temp1)]
+  if(length(temp1)>0){
+    dmulti$JWnb[i]<-unique(temp1)
+  }
+  temp1<-unique(temp[temp$Name==dmulti$Name[i],]$Bnb)
+  temp1<-temp1[!is.na(temp1)]
+  if(length(temp1)>0){
+    dmulti$Bnb[i]<-unique(temp1)
+  }
+}
+```
