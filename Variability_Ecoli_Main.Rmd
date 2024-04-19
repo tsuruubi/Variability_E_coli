@@ -13,13 +13,13 @@ the Evo dataset: RNA-seq compendium of different natural isolates of E. coli gro
 the Mut dataset: Microarray compedium of different lineages of the mutation accumulation (MA) experiments using E. coli MG1655 delt-dnaQ::kan
 
 Section 0: General settings
-Section 1: Define name space of genes and set TRN, KEGG pathway
+Section 1: Define name space of genes and set Transcriptional regulatory network (TRN), the KEGG pathways
 Section 2: Load the Mut dataset and calculate transcriptional variability (DMmut)
 Section 3: Load the Env dataset and calculate transcriptional variability (DMenv) 
 Section 4: Load the Evo dataset and calculate transcriptional variability (DMevo)
-Section 5: Comparison of DMs
-Section 6: GSEA in KEGG pathways
-Section 7: GSEA in TRN
+Section 5: Comparison of the DM values between the three datasets
+Section 6: GSEA using the KEGG pathways
+Section 7: GSEA using TRN
 Section 8: TRN statistics
 Section 9: PCA
 Section 10: Gene Ontology
@@ -28,7 +28,7 @@ Section 11: Analysis of the Noise_ch and Noise_pl dataset (Taniguchi, Science, 2
 Section 14: Analysis of the Prtn dataset (Schmidt, Nat. Biotechnol., 2016)
 Section 15: Analysis of the Strs dataset (Maeda and Iwasawa, Nat. Comm., 2020)
 Section 16: Analysis of the Strs_hp and Strs_he (Horinouchi, Sci. Rep., 2017)
-Section 17: Bow-tie deconvolution
+Section 17: Bow-tie decomposition
 Section 18:
 Section 19:
 Section 20: Output for supplementary tables
@@ -37,11 +37,11 @@ Section 20: Output for supplementary tables
 # 0. General Settings
 ## 0.1. Load workspace
 ```{r workspace_load,warning=FALSE, message=FALSE}
-# load("./MATranscriptome_submit.RData")
+# load("./Variability_Ecoli_Main.RData")
 ```
 ## 0.2. Save workspace
 ```{r workspace_save,warning=FALSE, message=FALSE}
-# save.image("./MATranscriptome_submit.RData")
+# save.image("./Variability_Ecoli_Main.RData")
 ```
 ## 0.3. Library loading
 ```{r library,warning=FALSE, message=FALSE}
@@ -186,6 +186,9 @@ Sys.time()
 
 
 
+#
+#
+#
 # 1. Name space of genes, TRN and KEGG pathways
 ## 1.1. Define namse space of genes
 ```{r Global_Bnb,warning=FALSE, message=FALSE,fig.height=1.4,fig.width=1.4,dpi=300}
@@ -700,6 +703,9 @@ Sys.time()
 ```
 
 
+#
+#
+#
 # 2. The Mut dataset
 Load the Mut dataset and evaluate variability in response to mutations (DMmut)
 How to obtain transcritome data of the MA lineages
@@ -1018,7 +1024,7 @@ datlog.norm$SSmut<-datlog.norm$SS.SD.sep.R30
 Sys.time()
 ```
 ## 2.10. SDmut vs. MEANmut, DMmut vs. MEANmut
-```{r Mut,warning=FALSE, message=FALSE,fig.height=2.5,fig.width=3,dpi=300}
+```{r Mut,warning=FALSE, message=FALSE,fig.height=3,fig.width=4,dpi=300}
 my_fontsize<-16
 p<-ggscatter(datlog.norm,x="MEANmut",y="SDmut", alpha = 0.3, size=1.5,fill="black",
               legend="",shape=21,stroke=0,cor.coef = T,cor.coeff.args = list(method = "spearman", label.x = 10.5, label.y=3, label.sep = "\n",size=5))+
@@ -1042,7 +1048,7 @@ p
 Sys.time()
 ```
 ## 2.11. Representative genes
-```{r Mut,warning=FALSE, message=FALSE,fig.height=2.5,fig.width=3,dpi=300}
+```{r Mut,warning=FALSE, message=FALSE,fig.height=3,fig.width=3,dpi=300}
 my_R30<-qw(H03_30,H04_30,H06_30,H08_30,H10_30,H11_30)
 temp<-datlog.norm[datlog.norm$Bnb %in% qw(b3952,b3591,b4177,b3478,b0763,b0432),which(colnames(datlog.norm) %in% c("Bnb",my_R30))]
 temp2<-temp %>% pivot_longer(cols=my_R30,names_to = "MAlineage",values_to ="log_ex_norm")
@@ -1097,6 +1103,9 @@ Sys.time()
 
 
 
+#
+#
+#
 # 3. The Env dataset
 Load the Env dataset (PRECISE2) and evaluate variability in response to environmental changes (DMenv)
 https://imodulondb.org/dataset.html?organism=e_coli&dataset=precise2
@@ -1269,7 +1278,7 @@ prtemp2.pr2_wo_abx$SSenv_wo_abx=prtemp2.pr2_wo_abx$PRSmoothSp
 Sys.time()
 ```
 ## 3.4 SDenv vs. MEANenv, DMenv vs. MEANenv
-```{r Env,warning=FALSE, message=FALSE,fig.height=2.5,fig.width=3,dpi=300}
+```{r Env,warning=FALSE, message=FALSE,fig.height=3,fig.width=4,dpi=300}
 my_fontsize<-16
 # Mean vs SD in PR2
 p<-ggscatter(prtemp2.pr2,x="MEANenv",y="SDenv", alpha = 0.3,size=1.5,
@@ -1302,7 +1311,7 @@ p
 Sys.time()
 ```
 ## 3.5 Representative genes
-```{r Env,warning=FALSE, message=FALSE,fig.height=2.5,fig.width=3,dpi=300}
+```{r Env,warning=FALSE, message=FALSE,fig.height=3,fig.width=3,dpi=300}
 temp<-log_tpm_pl.pr2[log_tpm_pl.pr2$Bnb %in% qw(b3952,b3591,b4177,b3478,b0763,b0432),]
 temp2<-temp %>% pivot_longer(cols=colnames(temp)[2:ncol(temp)],names_to = qw(Condition),values_to =qw(log_tpm_norm))
 temp2<-left_join(temp2,dBnb[,which(colnames(dBnb) %in% qw(Bnb,gene))],by="Bnb")
@@ -1345,6 +1354,9 @@ Sys.time()
 ```
 
 
+#
+#
+#
 # 4. The Evo dataset
 Load the Evo dataset and evaluate variability in evolution (DMevo)
 Transcriptome data of 16 E. coli species in LB
@@ -1459,7 +1471,7 @@ dcol16.qnorm$SSevo=dcol16.qnorm$SmoothSpline
 Sys.time()
 ```
 ## 4.4. SDevo vs. MEANevo, DMevo vs. MEANevo
-```{r Evo,warning=FALSE, message=FALSE,fig.height=2.5,fig.width=3,dpi=300}
+```{r Evo,warning=FALSE, message=FALSE,fig.height=3,fig.width=4,dpi=300}
 my_fontsize<-16
 p<-ggscatter(dcol16.qnorm,x="MEANevo",y="SDevo", alpha = 0.3, size=1.5,fill="black",
               legend="",shape=21,stroke=0,
@@ -1488,7 +1500,7 @@ p
 Sys.time()
 ```
 ## 4.5. Representative genes in Eco16
-```{r Evo,warning=FALSE, message=FALSE,fig.height=2.5,fig.width=3,dpi=300}
+```{r Evo,warning=FALSE, message=FALSE,fig.height=3,fig.width=3,dpi=300}
 my_fontsize<-16
 temp<-dcol16.qnorm[dcol16.qnorm$Bnb %in% qw(b3952,b3591,b4177,b3478,b0763,b0432),]
 temp2<-temp %>% pivot_longer(cols=colnames(temp)[8:23],names_to = qw(Condition),values_to =qw(log_rpkm_norm))
@@ -1560,10 +1572,10 @@ ggpar(p,xlab=F,legend="")
 
 Sys.time()
 ```
-
-
-
-# 5. Comparison of DM values between all datasets
+#
+#
+#
+# 5. Comparison of the DM values between the three datasets
 ## 5.1. Comparison between DMenv, DMevo and DMmut at the gene levels
 ```{r All_DM,warning=FALSE, message=FALSE,fig.height=2.5,fig.width=2.5,dpi=300}
 df_DMall<-dBnb.comp
@@ -1685,10 +1697,12 @@ colnames(my_tmp)<-c("Label","KEGG ID","Pathway name")
 ggtexttable(my_tmp,rows=NULL)
 Sys.time()
 ```
-
-
+#
+#
+#
 # 6. GSEA using KEGG pathways
 ## 6.1. GSEA in KEGG for the Env dataset
+### 6.1.1. perform GSEA
 ```{r All_GSEA_KEGG,warning=FALSE, message=FALSE,fig.height=8,fig.width=6,dpi=300}
 my_DM<-"DMenv"
 gene_list <- df_DMall[,colnames(df_DMall)==my_DM] # Create a vector of the gene universe
@@ -1696,14 +1710,16 @@ names(gene_list)<-df_DMall$EntrezID
 gene_list = sort(gene_list, decreasing = TRUE) # sort the list in decreasing order (required for clusterProfiler)
 
 ## KEGG Pathway analysis
+set.seed(123)
 res_gsea <- GSEA(geneList     = gene_list,
               TERM2GENE = dkegg.each.gsea,
+              seed = TRUE,
                nPerm        = 10000,
                minGSSize    = 5, # 5
                maxGSSize    = 300, # 300
                pvalueCutoff = 1, # <------------ set 1 to obtain enrichment scores for all gene sets 
                pAdjustMethod = "BH") #fdr
-
+set.seed(NULL)
 # pAdjusted and qvalues
 # https://support.bioconductor.org/p/88811/
 # https://www.biostars.org/p/128931/
@@ -1719,15 +1735,6 @@ dot_df$type="Sensitive"
 dot_df$type[dot_df$NES < 0]="Robust"
 dot_df$type<-factor(dot_df$type,levels=c("Sensitive","Robust"))
 
-
-# ggplot(dot_df, aes(x = enrichmentScore, y = fct_reorder(Pathway_name, enrichmentScore))) + 
-#                geom_point(aes(size = GeneRatio, color = qvalues)) +
-#                theme_bw(base_size = 14) +
-#         scale_colour_gradient(limits=c(0, 0.05), low="red") +
-#         # scale_y_discrete(labels = function(y) str_wrap(y, width = 30))+
-#         ylab(NULL) +
-#         ggtitle("Kegg pathway enrichment",subtitle =mysubtitle)
-
 dot_df<-dot_df[order(dot_df$enrichmentScore,decreasing = F),]
 
 # identify leading edge subset
@@ -1738,17 +1745,11 @@ for (i in 1:nrow(dot_df)){
 }
 dot_df$log_qvalue<-log10(dot_df$qvalue)
 dgsea_kegg_env<-dot_df
-
-# p<-ggdotplot(dot_df[dot_df$qvalue<0.05,],y="enrichmentScore",x="Pathway_name",rotate=T, legend="",
-#           fill = "qvalue",size=2,
-#           sort.val = "desc",
-#           ylab="Enrichment Score (GSEA)",xlab="")
-# p
-# q<-ggpar(p,legend = "right",legend.title = "q-value",font.ytickslab= c(10))
-# leg <- ggpubr::get_legend(q)
-# as_ggplot(leg)
-
-figtemp1<-dot_df[dot_df$qvalue<0.05,]
+Sys.time()
+```
+### 6.1.2. visualization
+```{r All_GSEA_KEGG,warning=FALSE, message=FALSE,fig.height=8,fig.width=6,dpi=300}
+figtemp1<-dgsea_kegg_env[dgsea_kegg_env$qvalue<0.05,]
 figtemp1$Path_lab<-paste(figtemp1$Pathway_name, " (",figtemp1$label,")",sep="")
 p<-ggdotchart(figtemp1,x="Path_lab",y="NES", # "enrichmentScore"
            color="log_qvalue",
@@ -1764,13 +1765,10 @@ p<-ggdotchart(figtemp1,x="Path_lab",y="NES", # "enrichmentScore"
                         guide=guide_colourbar(title="q-value (log)",title.position = "top",label.position = "bottom",label.vjust = 0.4,label.hjust = 0.2,label.theme = element_text(angle = 90),ticks.linewidth = 1,order=1))+
   guides(size = guide_legend(title= "Gene ratio",title.position = "top",order=2))
 p
-# q<-ggpar(p,legend = "top",legend.title = list("Gene Ratio","Adjusted p-value"),font.ytickslab= c(10))
-# leg <- ggpubr::get_legend(q)
-# as_ggplot(leg)
-
 Sys.time()
 ```
 ## 6.2. GSEA in KEGG for the Evo dataset
+### 6.2.1. perform GSEA
 ```{r All_GSEA_KEGG,warning=FALSE, message=FALSE,fig.height=5,fig.width=4,dpi=300}
 my_DM<-"DMevo"
 gene_list <- df_DMall[,colnames(df_DMall)==my_DM] # Create a vector of the gene universe
@@ -1778,13 +1776,16 @@ names(gene_list)<-df_DMall$EntrezID
 gene_list = sort(gene_list, decreasing = TRUE) # sort the list in decreasing order (required for clusterProfiler)
 
 ## KEGG Pathway analysis
+set.seed(123)
 res_gsea <- GSEA(geneList     = gene_list,
               TERM2GENE = dkegg.each.gsea,
+              seed=TRUE,
                nPerm        = 10000,
                minGSSize    = 5, # 5
                maxGSSize    = 300, # 300
                pvalueCutoff = 1, # <------------ set 1 to obtain enrichment scores for all gene sets 
                pAdjustMethod = "BH") #fdr
+set.seed(NULL)
 
 gene_count<-res_gsea@result %>% group_by(ID) %>% summarise(count = sum(str_count(core_enrichment, "/")+1))
 dot_df<- left_join(res_gsea@result, gene_count, by = "ID") %>% mutate(GeneRatio = count/setSize)
@@ -1792,16 +1793,6 @@ dot_df<- left_join(dot_df,dkegg[,which(colnames(dkegg) %in% qw(Pathway_ID,label,
 dot_df$type="Sensitive"
 dot_df$type[dot_df$NES < 0]="Robust"
 dot_df$type<-factor(dot_df$type,levels=c("Sensitive","Robust"))
-
-
-# ggplot(dot_df, aes(x = enrichmentScore, y = fct_reorder(Pathway_name, enrichmentScore))) + 
-#                geom_point(aes(size = GeneRatio, color = qvalues)) +
-#                theme_bw(base_size = 14) +
-#         scale_colour_gradient(limits=c(0, 0.05), low="red") +
-#         # scale_y_discrete(labels = function(y) str_wrap(y, width = 30))+
-#         ylab(NULL) +
-#         ggtitle("Kegg pathway enrichment",subtitle =mysubtitle)
-
 dot_df<-dot_df[order(dot_df$enrichmentScore,decreasing = F),]
 
 # identify leading edge subset
@@ -1812,17 +1803,11 @@ for (i in 1:nrow(dot_df)){
 }
 dot_df$log_qvalue<-log10(dot_df$qvalue)
 dgsea_kegg_evo<-dot_df
-
-# p<-ggdotplot(dot_df[dot_df$qvalue<0.05,],y="enrichmentScore",x="Pathway_name",rotate=T, legend="",
-#           fill = "qvalue",size=2,
-#           sort.val = "desc",
-#           ylab="Enrichment Score (GSEA)",xlab="")
-# p
-# q<-ggpar(p,legend = "right",legend.title = "q-value",font.ytickslab= c(10))
-# leg <- ggpubr::get_legend(q)
-# as_ggplot(leg)
-
-figtemp1<-dot_df[dot_df$qvalue<0.05,]
+Sys.time()
+```
+### 6.2.2. visualization
+```{r All_GSEA_KEGG,warning=FALSE, message=FALSE,fig.height=5,fig.width=4,dpi=300}
+figtemp1<-dgsea_kegg_evo[dgsea_kegg_evo$qvalue<0.05,]
 figtemp1$Path_lab<-paste(figtemp1$Pathway_name, " (",figtemp1$label,")",sep="")
 p<-ggdotchart(figtemp1,x="Path_lab",y="NES", # "enrichmentScore"
            color="log_qvalue",
@@ -1838,13 +1823,10 @@ p<-ggdotchart(figtemp1,x="Path_lab",y="NES", # "enrichmentScore"
                         guide=guide_colourbar(title="q-value (log)",title.position = "top",label.position = "bottom",label.vjust = 0.4,label.hjust = 0.2,label.theme = element_text(angle = 90),ticks.linewidth = 1,order=1))+
   guides(size = guide_legend(title= "Gene ratio",title.position = "top",order=2))
 p
-# q<-ggpar(p,legend = "top",legend.title = list("Gene Ratio","Adjusted p-value"),font.ytickslab= c(10))
-# leg <- ggpubr::get_legend(q)
-# as_ggplot(leg)
-
 Sys.time()
 ```
 ## 6.3. GSEA in KEGG for the Mut dataset
+### 6.3.1. perform GSEA
 ```{r All_GSEA_KEGG,warning=FALSE, message=FALSE,fig.height=6,fig.width=5,dpi=300}
 my_DM<-"DMmut"
 gene_list <- df_DMall[,colnames(df_DMall)==my_DM] # Create a vector of the gene universe
@@ -1852,13 +1834,16 @@ names(gene_list)<-df_DMall$EntrezID
 gene_list = sort(gene_list, decreasing = TRUE) # sort the list in decreasing order (required for clusterProfiler)
 
 ## KEGG Pathway analysis
+set.seed(123)
 res_gsea <- GSEA(geneList     = gene_list,
               TERM2GENE = dkegg.each.gsea,
+              seed=TRUE,
                nPerm        = 10000,
                minGSSize    = 5, # 5
                maxGSSize    = 300, # 300
                pvalueCutoff = 1, # <------------ set 1 to obtain enrichment scores for all gene sets 
                pAdjustMethod = "BH") #fdr
+set.seed(NULL)
 
 gene_count<-res_gsea@result %>% group_by(ID) %>% summarise(count = sum(str_count(core_enrichment, "/")+1))
 dot_df<- left_join(res_gsea@result, gene_count, by = "ID") %>% mutate(GeneRatio = count/setSize)
@@ -1866,16 +1851,6 @@ dot_df<- left_join(dot_df,dkegg[,which(colnames(dkegg) %in% qw(Pathway_ID,label,
 dot_df$type="Sensitive"
 dot_df$type[dot_df$NES < 0]="Robust"
 dot_df$type<-factor(dot_df$type,levels=c("Sensitive","Robust"))
-
-
-# ggplot(dot_df, aes(x = enrichmentScore, y = fct_reorder(Pathway_name, enrichmentScore))) + 
-#                geom_point(aes(size = GeneRatio, color = qvalues)) +
-#                theme_bw(base_size = 14) +
-#         scale_colour_gradient(limits=c(0, 0.05), low="red") +
-#         # scale_y_discrete(labels = function(y) str_wrap(y, width = 30))+
-#         ylab(NULL) +
-#         ggtitle("Kegg pathway enrichment",subtitle =mysubtitle)
-
 dot_df<-dot_df[order(dot_df$enrichmentScore,decreasing = F),]
 
 # identify leading edge subset
@@ -1886,17 +1861,11 @@ for (i in 1:nrow(dot_df)){
 }
 dot_df$log_qvalue<-log10(dot_df$qvalue)
 dgsea_kegg_mut<-dot_df
-
-# p<-ggdotplot(dot_df[dot_df$qvalue<0.05,],y="enrichmentScore",x="Pathway_name",rotate=T, legend="",
-#           fill = "qvalue",size=2,
-#           sort.val = "desc",
-#           ylab="Enrichment Score (GSEA)",xlab="")
-# p
-# q<-ggpar(p,legend = "right",legend.title = "q-value",font.ytickslab= c(10))
-# leg <- ggpubr::get_legend(q)
-# as_ggplot(leg)
-
-figtemp1<-dot_df[dot_df$qvalue<0.05,]
+Sys.time()
+```
+### 6.3.2. visualization
+```{r All_GSEA_KEGG,warning=FALSE, message=FALSE,fig.height=6,fig.width=5,dpi=300}
+figtemp1<-dgsea_kegg_mut[dgsea_kegg_mut$qvalue<0.05,]
 figtemp1$Path_lab<-paste(figtemp1$Pathway_name, " (",figtemp1$label,")",sep="")
 p<-ggdotchart(figtemp1,x="Path_lab",y="NES", # "enrichmentScore"
            color="log_qvalue",
@@ -1912,10 +1881,6 @@ p<-ggdotchart(figtemp1,x="Path_lab",y="NES", # "enrichmentScore"
                         guide=guide_colourbar(title="q-value (log)",title.position = "top",label.position = "bottom",label.vjust = 0.4,label.hjust = 0.2,label.theme = element_text(angle = 90),ticks.linewidth = 1,order=1))+
   guides(size = guide_legend(title= "Gene ratio",title.position = "top",order=2))
 p
-# q<-ggpar(p,legend = "top",legend.title = list("Gene Ratio","Adjusted p-value"),font.ytickslab= c(10))
-# leg <- ggpubr::get_legend(q)
-# as_ggplot(leg)
-
 Sys.time()
 ```
 ## 6.4. Visualize all datasets
@@ -1975,10 +1940,12 @@ for(i in 1:nrow(my_tmp)){
 
 Sys.time()
 ```
-
-
+#
+#
+#
 # 7. GSEA using TRN
 ## 7.1. GSEA in TRN for the Env dataset
+### 7.1.1. perform GSEA
 ```{r All_GSEA_TRN,warning=FALSE, message=FALSE,fig.height=3.5,fig.width=6,dpi=300}
 my_DM<-"DMenv"
 gene_list <- df_DMall[,colnames(df_DMall)==my_DM] # Create a vector of the gene universe
@@ -1986,30 +1953,22 @@ names(gene_list)<-df_DMall$EntrezID
 gene_list = sort(gene_list, decreasing = TRUE) # sort the list in decreasing order (required for clusterProfiler)
 
 ## KEGG Pathway analysis
+set.seed(123)
 res_gsea <- GSEA(geneList     = gene_list,
               TERM2GENE = dtrn.each.gsea,
+              seed=TRUE,
                nPerm        = 10000,
                minGSSize    = 5, # 5
                maxGSSize    = 1000, # 300
                pvalueCutoff = 1, # <------------ set 1 to obtain enrichment scores for all gene sets 
                pAdjustMethod = "BH") #fdr
-
+set.seed(NULL)
 gene_count<-res_gsea@result %>% group_by(ID) %>% summarise(count = sum(str_count(core_enrichment, "/")+1))
 dot_df<- left_join(res_gsea@result, gene_count, by = "ID") %>% mutate(GeneRatio = count/setSize)
 dot_df<- left_join(dot_df,dkegg[,which(colnames(dkegg) %in% qw(Pathway_ID,label,Pathway_name))],by=c("ID"="Pathway_ID"))
 dot_df$type="Sensitive"
 dot_df$type[dot_df$NES < 0]="Robust"
 dot_df$type<-factor(dot_df$type,levels=c("Sensitive","Robust"))
-
-
-# ggplot(dot_df, aes(x = enrichmentScore, y = fct_reorder(Pathway_name, enrichmentScore))) + 
-#                geom_point(aes(size = GeneRatio, color = qvalues)) +
-#                theme_bw(base_size = 14) +
-#         scale_colour_gradient(limits=c(0, 0.05), low="red") +
-#         # scale_y_discrete(labels = function(y) str_wrap(y, width = 30))+
-#         ylab(NULL) +
-#         ggtitle("Kegg pathway enrichment",subtitle =mysubtitle)
-
 dot_df<-dot_df[order(dot_df$enrichmentScore,decreasing = F),]
 
 # identify leading edge subset
@@ -2019,10 +1978,12 @@ for (i in 1:nrow(dot_df)){
   dot_df$core_enrichment_Bnb[i]<-paste(dBnb.comp[dBnb.comp$EntrezID %in% temp,]$Bnb,collapse = "/")
 }
 dot_df$log_qvalue<-log10(dot_df$qvalue)
-
 dgsea_trn_env<-dot_df
-
-figtemp1<-dot_df[dot_df$qvalue<0.05,]
+Sys.time()
+```
+### 7.1.2. visualization
+```{r All_GSEA_TRN,warning=FALSE, message=FALSE,fig.height=3.5,fig.width=6,dpi=300}
+figtemp1<-dgsea_trn_env[dgsea_trn_env$qvalue<0.05,]
 p<-ggdotchart(figtemp1,x="Description",y="NES",
            color="log_qvalue",
            sorting = "descending", 
@@ -2049,6 +2010,7 @@ print(paste("Negative NES: ", nrow(figtemp1[figtemp1$NES<0,])))
 Sys.time()
 ```
 ## 7.2. GSEA in TRN for the Evo dataset
+### 7.2.1. perform GSEA
 ```{r All_GSEA_TRN,warning=FALSE, message=FALSE,fig.height=3.5,fig.width=6,dpi=300}
 my_DM<-"DMevo"
 gene_list <- df_DMall[,colnames(df_DMall)==my_DM] # Create a vector of the gene universe
@@ -2056,30 +2018,22 @@ names(gene_list)<-df_DMall$EntrezID
 gene_list = sort(gene_list, decreasing = TRUE) # sort the list in decreasing order (required for clusterProfiler)
 
 ## KEGG Pathway analysis
+set.seed(123)
 res_gsea <- GSEA(geneList     = gene_list,
               TERM2GENE = dtrn.each.gsea,
+              seed=TRUE,
                nPerm        = 10000,
                minGSSize    = 5, # 5
                maxGSSize    = 1000, # 300
                pvalueCutoff = 1, # <------------ set 1 to obtain enrichment scores for all gene sets 
                pAdjustMethod = "BH") #fdr
-
+set.seed(NULL)
 gene_count<-res_gsea@result %>% group_by(ID) %>% summarise(count = sum(str_count(core_enrichment, "/")+1))
 dot_df<- left_join(res_gsea@result, gene_count, by = "ID") %>% mutate(GeneRatio = count/setSize)
 dot_df<- left_join(dot_df,dkegg[,which(colnames(dkegg) %in% qw(Pathway_ID,label,Pathway_name))],by=c("ID"="Pathway_ID"))
 dot_df$type="Sensitive"
 dot_df$type[dot_df$NES < 0]="Robust"
 dot_df$type<-factor(dot_df$type,levels=c("Sensitive","Robust"))
-
-
-# ggplot(dot_df, aes(x = enrichmentScore, y = fct_reorder(Pathway_name, enrichmentScore))) + 
-#                geom_point(aes(size = GeneRatio, color = qvalues)) +
-#                theme_bw(base_size = 14) +
-#         scale_colour_gradient(limits=c(0, 0.05), low="red") +
-#         # scale_y_discrete(labels = function(y) str_wrap(y, width = 30))+
-#         ylab(NULL) +
-#         ggtitle("Kegg pathway enrichment",subtitle =mysubtitle)
-
 dot_df<-dot_df[order(dot_df$enrichmentScore,decreasing = F),]
 
 # identify leading edge subset
@@ -2091,8 +2045,11 @@ for (i in 1:nrow(dot_df)){
 dot_df$log_qvalue<-log10(dot_df$qvalue)
 
 dgsea_trn_evo<-dot_df
-
-figtemp1<-dot_df[dot_df$qvalue<0.05,]
+Sys.time()
+```
+### 7.2.2. visualization
+```{r All_GSEA_TRN,warning=FALSE, message=FALSE,fig.height=3.5,fig.width=6,dpi=300}
+figtemp1<-dgsea_trn_evo[dgsea_trn_evo$qvalue<0.05,]
 p<-ggdotchart(figtemp1,x="Description",y="NES",
            color="log_qvalue",
            sorting = "descending", 
@@ -2119,6 +2076,7 @@ print(paste("Negative NES: ", nrow(figtemp1[figtemp1$NES<0,])))
 Sys.time()
 ```
 ## 7.3. GSEA in TRN for the Mut dataset
+### 7.3.1. perform GSEA
 ```{r All_GSEA_TRN,warning=FALSE, message=FALSE,fig.height=3.5,fig.width=6,dpi=300}
 my_DM<-"DMmut"
 gene_list <- df_DMall[,colnames(df_DMall)==my_DM] # Create a vector of the gene universe
@@ -2126,30 +2084,22 @@ names(gene_list)<-df_DMall$EntrezID
 gene_list = sort(gene_list, decreasing = TRUE) # sort the list in decreasing order (required for clusterProfiler)
 
 ## KEGG Pathway analysis
+set.seed(123)
 res_gsea <- GSEA(geneList     = gene_list,
               TERM2GENE = dtrn.each.gsea,
+              seed=TRUE,
                nPerm        = 10000,
                minGSSize    = 5, # 5
                maxGSSize    = 1000, # 300
                pvalueCutoff = 1, # <------------ set 1 to obtain enrichment scores for all gene sets 
                pAdjustMethod = "BH") #fdr
-
+set.seed(NULL)
 gene_count<-res_gsea@result %>% group_by(ID) %>% summarise(count = sum(str_count(core_enrichment, "/")+1))
 dot_df<- left_join(res_gsea@result, gene_count, by = "ID") %>% mutate(GeneRatio = count/setSize)
 dot_df<- left_join(dot_df,dkegg[,which(colnames(dkegg) %in% qw(Pathway_ID,label,Pathway_name))],by=c("ID"="Pathway_ID"))
 dot_df$type="Sensitive"
 dot_df$type[dot_df$NES < 0]="Robust"
 dot_df$type<-factor(dot_df$type,levels=c("Sensitive","Robust"))
-
-
-# ggplot(dot_df, aes(x = enrichmentScore, y = fct_reorder(Pathway_name, enrichmentScore))) + 
-#                geom_point(aes(size = GeneRatio, color = qvalues)) +
-#                theme_bw(base_size = 14) +
-#         scale_colour_gradient(limits=c(0, 0.05), low="red") +
-#         # scale_y_discrete(labels = function(y) str_wrap(y, width = 30))+
-#         ylab(NULL) +
-#         ggtitle("Kegg pathway enrichment",subtitle =mysubtitle)
-
 dot_df<-dot_df[order(dot_df$enrichmentScore,decreasing = F),]
 
 # identify leading edge subset
@@ -2161,8 +2111,11 @@ for (i in 1:nrow(dot_df)){
 dot_df$log_qvalue<-log10(dot_df$qvalue)
 
 dgsea_trn_mut<-dot_df
-
-figtemp1<-dot_df[dot_df$qvalue<0.05,]
+Sys.time()
+```
+### 7.3.2. visualization
+```{r All_GSEA_TRN,warning=FALSE, message=FALSE,fig.height=3.5,fig.width=6,dpi=300}
+figtemp1<-dgsea_trn_mut[dgsea_trn_mut$qvalue<0.05,]
 p<-ggdotchart(figtemp1,x="Description",y="NES",
            color="log_qvalue",
            sorting = "descending", 
@@ -2188,7 +2141,7 @@ print(paste("Negative NES: ", nrow(figtemp1[figtemp1$NES<0,])))
 
 Sys.time()
 ```
-## 7.4. Venn diagram of enriched TFs in higher DM values in three datasets and define TRcom
+## 7.4. Venn diagram of enriched TRs in higher DM values in three datasets and define TRcom
 ```{r All_GSEA_TRN,warning=FALSE, message=FALSE,fig.height=3,fig.width=3,dpi=300}
 # venn
 venn_all<-list(
@@ -2196,15 +2149,9 @@ venn_all<-list(
   Env=dgsea_trn_env[(dgsea_trn_env$NES>0)&(dgsea_trn_env$qvalue<0.05),]$ID,
   Mut=dgsea_trn_mut[(dgsea_trn_mut$NES>0)&(dgsea_trn_mut$qvalue<0.05),]$ID
 )
-
-# global_eTFs<-Evo[(Evo %in% Env)&(Evo %in% Mut)] #TRcoms
-
-
-# ggVennDiagram(figtemp)
 venn <- process_data(Venn(venn_all))
 venn$regionData$name
 venn$regionData$count
-# venn$regionData$item
 v<-venneuler(c(Evo=length(venn$regionData$item[[which(venn$regionData$name=="Evo")]]),
                Env=length(venn$regionData$item[[which(venn$regionData$name=="Env")]]),
                Mut=length(venn$regionData$item[[which(venn$regionData$name=="Mut")]]),
@@ -2229,7 +2176,7 @@ for(i in 1:length(venn$regionData$item)){
 
 Sys.time()
 ```
-## 7.5. Venn diagram of enriched TFs in lower DM values in three datasets
+## 7.5. Venn diagram of enriched TRs in lower DM values in three datasets
 ```{r All_GSEA_TRN,warning=FALSE, message=FALSE,fig.height=3,fig.width=3,dpi=300}
 # venn
 venn_all<-list(
@@ -2238,14 +2185,9 @@ venn_all<-list(
   Mut=dgsea_trn_mut[(dgsea_trn_mut$NES<0)&(dgsea_trn_mut$qvalue<0.05),]$ID
 )
 
-# global_eTFs<-Evo[(Evo %in% Env)&(Evo %in% Mut)] #TRcoms
-
-
-# ggVennDiagram(figtemp)
 venn <- process_data(Venn(venn_all))
 venn$regionData$name
 venn$regionData$count
-# venn$regionData$item
 v<-venneuler(c(Evo=length(venn$regionData$item[[which(venn$regionData$name=="Evo")]]),
                Env=length(venn$regionData$item[[which(venn$regionData$name=="Env")]]),
                Mut=length(venn$regionData$item[[which(venn$regionData$name=="Mut")]]),
@@ -2268,9 +2210,9 @@ for(i in 1:length(venn$regionData$item)){
 
 Sys.time()
 ```
-
-
-
+#
+#
+#
 # 8. TRN statics
 ## 8.1. Ranking of # of target genes
 ```{r TRN,warning=FALSE, message=FALSE,fig.height=4,fig.width=2.5,dpi=300}
@@ -2371,7 +2313,7 @@ grid.arrange(p1,blank,p2,
              left=textGrob("Number of target genes", rot=90,gp=gpar(fontsize=18)))
 Sys.time()
 ```
-## 8.2. All TRN
+## 8.2. TRN comprising all TRs
 https://qiita.com/saltcooky/items/4e55d97c5e86dfb208cd 
 ```{r TRN,warning=FALSE, message=FALSE,fig.height=6,fig.width=7,dpi=300}
 temp<-data.frame(who=TRN.ts$regulator,whom=TRN.ts$target,effect=TRN.ts$effect)
@@ -2466,7 +2408,7 @@ g %>%
   scale_size(range = c(2, 10))
 Sys.time()
 ```
-## 8.3. Subnetwork comprising TRcom
+## 8.3. TRN comprising TRcom
 https://qiita.com/saltcooky/items/4e55d97c5e86dfb208cd 
 ```{r TRN,warning=FALSE, message=FALSE,fig.height=3.5,fig.width=4.5,dpi=300}
 temp<-data.frame(who=TRN.ts$regulator,whom=TRN.ts$target,effect=TRN.ts$effect)
@@ -2563,8 +2505,7 @@ ggraph::ggraph(g, "manual", x = g2$data$x, y = g2$data$y)+
 
 Sys.time()
 ```
-## 8.4. Other TFs an sigmas
-https://qiita.com/saltcooky/items/4e55d97c5e86dfb208cd 
+## 8.4. TRN comprising Non-TRcom
 ```{r TRN,warning=FALSE, message=FALSE,fig.height=6,fig.width=7,dpi=300}
 dnet_edgeinfo_ts.global.others<-dnet_edgeinfo_ts.global[dnet_edgeinfo_ts.global$who %nin% TRcom & dnet_edgeinfo_ts.global$whom %nin% TRcom,]
 dnet_nodeinfo_ts.global.others<-dnet_nodeinfo_ts.global[dnet_nodeinfo_ts.global$Name %in% unique(c(dnet_edgeinfo_ts.global.others$who,dnet_edgeinfo_ts.global.others$whom)), ]
@@ -2603,7 +2544,7 @@ Sys.time()
 ```
 ## 8.5. Calculate edge density of randomly sampled subnetwork
 About 13 regulators are sampled.
-Self loops are omitted.
+Self-loops are omitted from the calculation.
 ```{r TRN,warning=FALSE, message=FALSE,fig.height=3.1,fig.width=3,dpi=300}
 temp0<-trn.stat.table[trn.stat.table$all_target>4,] %>% distinct(regulator,.keep_all = T)
 trial<-10000
@@ -2653,7 +2594,7 @@ p
 Sys.time()
 ```
 ## 8.6. Plot edge density within communities
-Self-loops are removed
+Self-loops are omitted.
 ```{r TRN,warning=FALSE, message=FALSE,fig.height=3,fig.width=2.5,dpi=300}
 
 # Edge density of the TRN including sigma
@@ -2689,7 +2630,7 @@ df.edge.dens$Class2<-df.edge.dens$Class
 df.edge.dens$Class2[df.edge.dens$Class2=="TRcom"]<-"TRcom"
 df.edge.dens$Class2<-factor(df.edge.dens$Class2,levels=qw(TRcom,Others,All,Random))
 df.edge.dens$Class3<-c(glue("TR[com]"),"Others","All","Random")
-my_labs<-c(bquote(TR[com]),bquote(Others),bquote(All),bquote(Random))
+my_labs<-c(bquote(TR[com]),bquote(Non-TR[com]),bquote(All),bquote(Random))
 names(my_labs)<-df.edge.dens$Class2
 p<-ggbarplot(df.edge.dens,x="Class2",y="EdgeDensity",fill="Class2",palette = temp,xlab="",ylab="Edge density",legend.title="",legend="")+
   geom_linerange(aes(ymax=High_sd,ymin=Low_sd),width=0.5)+
@@ -2700,7 +2641,7 @@ p
 Sys.time()
 ```
 ## 8.7. Calculate edge density between TRcoms and Others
-About 13 regulators are sampled 
+The number of sample size was equal to that of TRcoms
 ```{r TRN,warning=FALSE, message=FALSE,fig.height=3,fig.width=3,dpi=300}
 temp0<-trn.stat.table[trn.stat.table$all_target>4,] %>% distinct(regulator,.keep_all = T)
 temp1<-temp0[temp0$regulator %nin% TRcom,]
@@ -2793,11 +2734,6 @@ ggscatter(dnet_degree,x="in_degree",y="DMmut",alpha=0.3)+
 Sys.time()
 ```
 ## 8.10. Count the number of regulations (TRcom-containing or TRcom-less) for each target genes
-create df.regcount
-solo.wo.rpod: 
-multi.wo.rpod: 
-solo.wt.rpod: 
-multi.wt.rpod: 
 ```{r TRN,warning=FALSE, message=FALSE,fig.height=2.5,fig.width=2,dpi=300}
 # temp<-dtrn_slmlt
 # temp<-left_join(temp,df_DMall[,which(colnames(df_DMall) %in% qw(Bnb,DMenv,DMevo,DMmut))],by=c("gene_id"="Bnb"))
@@ -2981,10 +2917,6 @@ grid.arrange(as_ggplot(leg),blank,figlist[[1]],figlist[[2]],figlist[[3]],
              heights=c(0.2,0.1,rep(1.1,3)))
 Sys.time()
 ```
-
-
-
-
 ## 8.11.2.
 ```{r TRN,warning=FALSE, message=FALSE,fig.height=6,fig.width=4.5,dpi=300}
 # Error plots
@@ -3032,18 +2964,8 @@ grid.arrange(figlist[[1]],figlist[[2]],figlist[[3]],
              heights=c(1,1,1.1))
 Sys.time()
 ```
-
-```{r TRN,warning=FALSE, message=FALSE,fig.height=3,fig.width=9,dpi=300}
-lay<-rbind(seq(1,3))
-grid.arrange(figlist[[1]],figlist[[2]],figlist[[3]],
-             layout_matrix=lay,
-             bottom=textGrob("Number of unique transcriptional regulators",gp=gpar(fontsize=16)),
-             widths=c(1,1,1))
-Sys.time()
-```
-
 ## 8.12. Example of correlation between DMenv and the Number of TRcoms for target genes which has 5 unique regulators
-### 8.12.1.1. Include all sigma factors
+### 8.12.1. Include all sigma factors
 ```{r TRN,warning=FALSE, message=FALSE,fig.height=5,fig.width=4,dpi=300}
 # Example of correlation between DMenv and the Number of TRcoms for target genes which has 5 unique regulators
 i<-5
@@ -3124,51 +3046,6 @@ grid.arrange(p4,p5,
              heights=c(0.7,1))
 Sys.time()
 ```
-
-
-
-
-### 8.12.1.2.
-```{r TRN,warning=FALSE, message=FALSE,fig.height=5,fig.width=4,dpi=300}
-# Example of correlation between DMenv and the Number of TRcoms for target genes which has 5 unique regulators
-i<-5
-figtemp3<-dtrget_stat[dtrget_stat$Count.allregs==i,]
-## DMenv
-p4.1<-ggerrorplot(figtemp3,x="Count.TRcom",y="DMenv",
-                desc_stat = "mean_sd",
-                legend="",
-          color = "TRcomflag",palette=c(mycolpal[2],"gray50"),
-          subtitle="Number of regulation: 5")+
-  xlab(expression(Number~of~regulation~by~paste(TR[com])))+
-  ylab(expression(DM[env]~"[a.u.]"))+
-  stat_cor(data=figtemp3,method="spearman",label.x=0.5,label.y = 1)
-p4.1<-p4.1+theme(axis.text.x= element_blank(),axis.title.x=element_blank())
-
-## DMevo
-p4.2<-ggerrorplot(figtemp3,x="Count.TRcom",y="DMevo",
-                desc_stat = "mean_sd",
-                legend="",
-          color = "TRcomflag",palette=c(mycolpal[2],"gray50"))+
-    xlab(expression(Number~of~regulation~by~paste(TR[com])))+
-  ylab(expression(DM[evo]~"[a.u.]"))+
-  stat_cor(data=figtemp3,method="spearman",label.x=0.5,label.y = 0.7)
-p4.2<-p4.2+theme(axis.text.x= element_blank(),axis.title.x=element_blank())
-
-## DMmut
-p4.3<-ggerrorplot(figtemp3,x="Count.TRcom",y="DMmut",
-                desc_stat = "mean_sd",
-                legend="",
-          color = "TRcomflag",palette=c(mycolpal[2],"gray50"))+
-    xlab(expression(Number~of~regulation~by~paste(TR[com])))+
-  ylab(expression(DM[mut]))+
-  stat_cor(data=figtemp3,method="spearman",label.x=0.5,label.y = 1)
-
-grid.arrange(p4.1,p4.2,p4.3,ncol=1,
-             heights=c(1.1,1,1.3))
-Sys.time()
-```
-
-
 ### 8.12.2. Remove all sigma factors
 ```{r TRN,warning=FALSE, message=FALSE,fig.height=5,fig.width=4,dpi=300}
 i<-5
@@ -3228,9 +3105,7 @@ grid.arrange(p4,p8,
 
 Sys.time()
 ```
-
-## 8.13.
-Consider not only direct regulators but also indirect regulators
+## 8.13. Relationship between the number of unique regulators, including indirect regulations, and DM values
 ```{r TRN,warning=FALSE, message=FALSE,fig.height=3,fig.width=4,dpi=300}
 my_g<-as_tbl_graph(dnet_edgeinfo_ts.global,directed = T)
 TRN.ts.subcomp<-data.frame(Regulator=V(my_g)$name,Subcomponent=NA,Subcomp_size=0)
@@ -3256,131 +3131,15 @@ ggscatter(df.regcount.subcomp,y="DMenv",x="Subcomp_size",size=0.1,alpha=0.1)+
   stat_cor(method="spearman",label.x = 3,label.y = 0)
 Sys.time()
 ```
-
-## 8.14.
-```{r TRN,warning=FALSE, message=FALSE,fig.height=3,fig.width=6,dpi=300}
-temp<-dBnb.comp %>% select(Bnb,gene)
-my_df<-left_join(df.regcount,temp,by=c("gene_id"="Bnb"))
-my_df<-my_df %>% select(gene,DMenv,DMevo,DMmut,regulators)
-my_df<-my_df[order(my_df$DMenv,decreasing = T),]
-rownames(my_df)<-seq(1,nrow(my_df))
-
-# table_theme <- ttheme(
-#   tbody.style = tbody_style(
-#    hjust = as.vector(matrix(c(0, 0, 0, 1, 1), ncol = 5, nrow = nrow(my_df), byrow = TRUE)),
-#    x = as.vector(matrix(c(.1, .1, .01,.9, .9), ncol = 5, nrow = nrow(my_df), byrow = TRUE))
-#  )
-# )
-# 
-# ggtexttable(head(my_df,50),theme = table_theme)
-
-my_df$label<-"Others"
-my_df[my_df$gene=="selA",]$label<-"selA"
-my_df[my_df$gene=="modA",]$label<-"modA"
-my_df$label<-factor(my_df$label,levels=qw(modA,selA,Others))
-
-my_df<-my_df[order(my_df$DMenv,decreasing = T),]
-p1<-ggbarplot(my_df,x="gene",y="DMenv",size=0,fill="label",palette = c(mycolpal[c(2,1)],"gray50"),legend="")+
-  rotate_x_text(angle=90)+ylab(expression(DM[env]))
-p1<-ggpar(p1,font.x = c(30),font.y=c(30),font.ytickslab = c(30),font.xtickslab = c(3))
-p1
-
-my_df<-my_df[order(my_df$DMevo,decreasing = T),]
-p2<-ggbarplot(my_df,x="gene",y="DMevo",size=0,fill="label",palette = c(mycolpal[c(2,1)],"gray50"),legend="")+
-  rotate_x_text(angle=90)+ylab(expression(DM[evo]))
-p2<-ggpar(p2,font.x = c(30),font.y=c(30),font.ytickslab = c(30),font.xtickslab = c(3))
-p2
-
-my_df<-my_df[order(my_df$DMmut,decreasing = T),]
-p3<-ggbarplot(my_df,x="gene",y="DMmut",size=0,fill="label",palette = c(mycolpal[c(2,1)],"gray50"),legend="")+
-  rotate_x_text(angle=90)+ylab(expression(DM[mut]))
-p3<-ggpar(p3,font.x = c(30),font.y=c(30),font.ytickslab = c(30),font.xtickslab = c(3))
-p3
-
-Sys.time()
-```
-## 8.15. A toy data only for visualizasation of principle of GSEA
-```{r TRN,warning=FALSE, message=FALSE,fig.height=3,fig.width=6,dpi=300}
-temp<-dBnb.comp %>% select(Bnb,gene)
-my_df<-left_join(df.regcount,temp,by=c("gene_id"="Bnb"))
-my_df<-my_df %>% select(gene,DMenv,DMevo,DMmut,regulators)
-my_df<-my_df[order(my_df$DMenv,decreasing = T),]
-rownames(my_df)<-seq(1,nrow(my_df))
-my_regs<-qw(FlhDC,DksA)
-my_rg<-my_regs[1]
-my_df$reg_example<-ifelse(str_detect(pattern = my_rg,string = my_df$regulators),1,-1)
-my_df[is.na(my_df$regulators),]$reg_example<--1
-my_df$label<-ifelse(my_df$reg_example==1,my_rg,"Others")
-my_df$label<-factor(my_df$label,levels=c(my_rg,"Others"))
-my_nh<-nrow(my_df[my_df$reg_example==1,])
-my_nmiss<-nrow(my_df[my_df$reg_example==-1,])
-
-
-my_df$reg_rand<-rbinom(n = nrow(my_df),1,prob = my_nh/nrow(my_df))
-my_df[my_df$reg_rand==0,]$reg_rand<--1
-my_df$label_rand<-ifelse(my_df$reg_rand==1,"Random","Others")
-my_df$label_rand<-factor(my_df$label_rand,levels=c("Random","Others"))
-
-my_df$Size_exampl<-ifelse(my_df$reg_example==1,0.5,0.1)
-
-p1<-ggbarplot(my_df,x="gene",y="DMenv",size=0.5,fill="label",color="label",palette = c("black","gray80"),legend="")+ # #E46726
-  rotate_x_text(angle=90)+ylab(expression(DM[env]))
-p1<-ggpar(p1,font.y=c(30),font.ytickslab = c(30))
-p1<-p1+theme(axis.text.x= element_blank(),axis.title.x=element_blank(),axis.ticks.x = element_blank())
-p1
-
-p2<-ggbarplot(my_df,x="gene",y="DMenv",size=0.5,fill="label_rand",color="label_rand",palette = c("black","gray80"),legend="")+ #"#619CFF" #E46726
-  rotate_x_text(angle=90)+ylab(expression(DM[env]))
-p2<-ggpar(p2,font.y=c(30),font.ytickslab = c(30))
-p2<-p2+theme(axis.text.x= element_blank(),axis.title.x=element_blank(),axis.ticks.x = element_blank())
-p2
-
-
-my_df$order<-rownames(my_df)
-my_df$RunES<-0
-my_df$RunES_rand<-0
-k<-0
-kr<-0
-for(i in 1:nrow(my_df)){
-  if(my_df$reg_example[i]==1){
-    k<-k+1/my_nh
-  }else{
-    k<-k-1/my_nmiss
-  }
-  my_df$RunES[i]<-k
-  if(my_df$reg_rand[i]==1){
-    kr<-kr+1/my_nh
-  }else{
-    kr<-kr-1/my_nmiss
-  }
-  my_df$RunES_rand[i]<-kr
-}
-
-
-p3<-ggline(my_df,x="order",y="RunES",plot_type = "l",ylab="Enrichment score",size=2)+
-  scale_y_continuous(breaks = get_breaks(by = 0.2, from = -0.2),limits =  c(-0.2, 0.45))+
-  geom_hline(yintercept = 0)
-p3<-ggpar(p3,font.y=c(26),font.ytickslab = c(26))
-p3<-p3+theme(axis.text.x= element_blank(),axis.title.x=element_blank(),axis.ticks.x = element_blank())
-p3
-
-p4<-ggline(my_df,x="order",y="RunES_rand",plot_type = "l",ylab="Enrichment score",size=2)+
-  scale_y_continuous(breaks = get_breaks(by = 0.2, from = -0.2),limits =  c(-0.2, 0.45))+
-  geom_hline(yintercept = 0)
-p4<-ggpar(p4,font.y=c(26),font.ytickslab = c(26))
-p4<-p4+theme(axis.text.x= element_blank(),axis.title.x=element_blank(),axis.ticks.x = element_blank())
-p4
-
-
-Sys.time()
-```
-
+#
+#
+#
 # 9. PCA
 https://personal.utdallas.edu/~herve/abdi-awPCA2010.pdf # detailed manual of PCA
 https://stats.stackexchange.com/questions/495342/pca-and-variable-contributions-to-first-n-dimensions
 http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/112-pca-principal-component-analysis-essentials/
 ## 9.1. PCA for the Env dataset
-#### 9.1.1 Detect outliers in PC1~PC3
+### 9.1.1 Detect outliers in PC1~PC3
 ```{r PCA_Env,warning=FALSE, message=FALSE,fig.height=4,fig.width=12,dpi=300}
 temp0<-log_tpm_pl.pr2[log_tpm_pl.pr2$Bnb %in% dBnb.comp$Bnb,]
 temp0<-temp0[order(temp0$Bnb,decreasing = F),]
@@ -3403,7 +3162,7 @@ if(length(my_tmp)>0){
 print(paste("Outliers: ",length(env_outlier[!is.na(env_outlier)]),"out of",nrow(my_res$x)))
 Sys.time()
 ```
-#### 9.1.2 Remove outliers if it is necessary and examine PCA
+### 9.1.2 Remove outliers if it is necessary and examine PCA
 ```{r PCA_Env,warning=FALSE, message=FALSE,fig.height=3,fig.width=3,dpi=300}
 mypcs<-paste("PC",seq(1:3),sep="")
 temp<-log_tpm_pl.pr2[log_tpm_pl.pr2$Bnb %in% dBnb.comp$Bnb,]
@@ -3473,7 +3232,7 @@ pca.glob.var_env<-get_pca_var(res.pca.global_env)
 
 Sys.time()
 ```
-### 9.1.2. 2D plot (PC1~PC3)
+### 9.1.3. 2D plot (PC1~PC3)
 ```{r PCA_Env,warning=FALSE, message=FALSE,fig.height=3,fig.width=9,dpi=300}
 my_tmp<-fileinfo_plasticity.pr2 %>% select(sample,sample_group,Growth.Rate..1.hr.)
 colnames(my_tmp)[3]<-"Growth_rate"
@@ -3515,7 +3274,7 @@ p3<-ggpar(p3,
 grid.arrange(p1,p2,p3,widths=c(1,1,1),nrow=1)
 Sys.time()
 ```
-### 9.1.3. Growth rate
+### 9.1.4. Correlation between PCs and th growth rate
 ```{r PCA_Env,warning=FALSE, message=FALSE,fig.height=3,fig.width=9,dpi=300}
 temp<-fileinfo_plasticity.pr2[,which(colnames(fileinfo_plasticity.pr2) %in% c("sample","Growth.Rate..1.hr.") )]
 colnames(temp)[colnames(temp)=="Growth.Rate..1.hr."]<-"Growth_Rate"
@@ -3541,7 +3300,7 @@ p3<-ggpar(p3,xlab = "PC3",ylab = "Growth rate [1/h]")
 grid.arrange(p1,p2,p3,widths=c(1,1,1),nrow=1)
 Sys.time()
 ```
-### 9.1.4. Mapping the Evo dataset onto the PC space defined by the Env dataset
+### 9.1.5. Mapping the Evo dataset onto the PC space defined by the Env dataset
 https://stats.stackexchange.com/questions/8630/principal-component-analysis-backwards-how-much-variance-of-the-data-is-expla
 ```{r PCA_Env,warning=FALSE, message=FALSE,fig.height=3,fig.width=3,dpi=300}
 temp0<-dcol16.qnorm[dcol16.qnorm$Bnb %in% dBnb.comp$Bnb,]
@@ -3580,7 +3339,7 @@ ggline(figtemp2,x="PC",y="Fraction_pct",numeric.x.axis = T,color="Source",palett
 
 Sys.time()
 ```
-### 9.1.5. Mapping the Mut dataset (Anc, R10, and R30) onto the PC plane defined by ENV_DataSet
+### 9.1.6. Mapping the Mut dataset (Anc, R10, and R30) onto the PC plane defined by the Env dataset
 ```{r PCA_Env,warning=FALSE, message=FALSE,fig.height=3,fig.width=3,dpi=300}
 temp0<-datlog.norm[datlog.norm$Bnb %in% dBnb.comp$Bnb,]
 temp0<-temp0[order(temp0$Bnb,decreasing = F),]
@@ -3618,7 +3377,7 @@ ggline(figtemp2,x="PC",y="Fraction_pct",numeric.x.axis = T,color="Source",palett
 
 Sys.time()
 ```
-### 9.1.6. Mapping MUT dataset (R30, R10, separately) onto the PC plane defined by ENV_DataSet
+### 9.1.7. Mapping the Mut dataset (R30, R10, separately) onto the PC plane defined by the Env dataset
 ```{r PCA_Env,warning=FALSE, message=FALSE,fig.height=3,fig.width=3,dpi=300}
 # R30
 MAlin.sel.R30<-MAlin.sel[grepl("_30",MAlin.sel)]
@@ -3686,7 +3445,7 @@ ggline(figtemp2,x="PC",y="Fraction_pct",numeric.x.axis = T,color="Source",palett
 
 Sys.time()
 ```
-### 9.1.7. Scree plot for Env, Evo and  Mut
+### 9.1.8. Scree plot for Env, Evo, and  Mut
 ```{r PCA_Env,warning=FALSE, message=FALSE,fig.height=2.5,fig.width=2.5,dpi=300}
 figtemp3<-dscree.env
 figtemp3<-left_join(figtemp3,dscree.mut[,which(colnames(dscree.mut) %in% qw(PC,pct_cum.mut))])
@@ -3734,9 +3493,8 @@ print(paste("The Env dataset explains",figtemp3[(figtemp3$PC==max(figtemp3$PC))&
 
 Sys.time()
 ```
-
 ## 9.2. PCA for the Evo dataset
-#### 9.2.1 Detect outliers in PC1~PC3
+### 9.2.1 Detect outliers in PC1~PC3
 ```{r PCA_Evo,warning=FALSE, message=FALSE,fig.height=4,fig.width=12,dpi=300}
 temp0<-dcol16.qnorm[dcol16.qnorm$Bnb %in% dBnb.comp$Bnb,]
 temp0<-temp0[order(temp0$Bnb,decreasing = F),]
@@ -3761,7 +3519,7 @@ if(length(my_tmp)>0){
 print(paste("Outliers: ",length(evo_outlier[!is.na(evo_outlier)]),"out of",nrow(my_res$x)))
 Sys.time()
 ```
-#### 9.2.2 Remove outliers if it is necessary and examine PCA
+### 9.2.2 Remove outliers if it is necessary and examine PCA
 ```{r PCA_Evo,warning=FALSE, message=FALSE,fig.height=3,fig.width=3,dpi=300}
 temp0<-dcol16.qnorm[dcol16.qnorm$Bnb %in% dBnb.comp$Bnb,]
 if(!is.na(evo_outlier)){
@@ -3828,7 +3586,7 @@ pca.glob.var_evo<-get_pca_var(res.pca.global_evo)
 
 Sys.time()
 ```
-### 9.2.2. 2D plot (PC1~PC3)
+### 9.2.3. 2D plot (PC1~PC3)
 ```{r PCA_Evo,warning=FALSE, message=FALSE,fig.height=3,fig.width=9,dpi=300}
 figtemp<-pc_scores_evo
 figtemp[figtemp$Condition=="X41_1Ti9",]$Condition<-"41-1Ti9"
@@ -3862,9 +3620,8 @@ leg <- ggpubr::get_legend(q)
 grid.arrange(p1,p2,p3,as_ggplot(leg),widths=c(1,1,1,0.3),nrow=1)
 Sys.time()
 ```
-
 ## 9.3. PCA for the Mut dataset
-#### 9.2.1 Detect outliers in PC1~PC3
+### 9.3.1. Detect outliers in PC1~PC3
 ```{r PCA_Mut,warning=FALSE, message=FALSE,fig.height=4,fig.width=12,dpi=300}
 temp0<-datlog.norm[datlog.norm$Bnb %in% dBnb.comp$Bnb,]
 temp0<-temp0[order(temp0$Bnb,decreasing = F),]
@@ -3890,7 +3647,7 @@ if(length(my_tmp)>0){
 print(paste("Outliers: ",length(mut_outlier[!is.na(mut_outlier)]),"out of",nrow(my_res$x)))
 Sys.time()
 ```
-#### 9.2.2 Remove outliers if it is necessary and examine PCA
+### 9.3.2. Remove outliers if it is necessary and examine PCA
 ```{r PCA_Mut,warning=FALSE, message=FALSE,fig.height=3,fig.width=3,dpi=300}
 temp0<-datlog.norm[datlog.norm$Bnb %in% dBnb.comp$Bnb,]
 if(!is.na(mut_outlier)){
@@ -3960,7 +3717,7 @@ pca.glob.var_mut<-get_pca_var(res.pca.global_mut)
 
 Sys.time()
 ```
-### 9.3.2. 2D plot (PC1~PC3)
+### 9.3.3. 2D plot (PC1~PC3)
 ```{r PCA_Mut,warning=FALSE, message=FALSE,fig.height=3,fig.width=10,dpi=300}
 figtemp<-pc_scores_mut
 figtemp<-left_join(figtemp, datinfo[,which(colnames(datinfo) %in% qw(Transfer,Lineage,Anc,label))],by=c("Condition"="label"))
@@ -3996,7 +3753,7 @@ leg <- ggpubr::get_legend(q)
 grid.arrange(p1,p2,p3,as_ggplot(leg),widths=c(1,1,1,0.4),nrow=1)
 Sys.time()
 ```
-### 9.3.3. Growth rate
+### 9.3.4. Correlation between PCs and th growth rate
 ```{r PCA_Mut,warning=FALSE, message=FALSE,fig.height=3,fig.width=10,dpi=300}
 figtemp<-pc_scores_mut
 figtemp<-left_join(figtemp, datinfo[,which(colnames(datinfo) %in% qw(Transfer,Lineage,Anc,label,Growth_Rate))],by=c("Condition"="label"))
@@ -4324,10 +4081,10 @@ print(paste("Env_PC1 vs. Mut_PC2: ",calc_theta(vec_env[,1],vec_mut[,2]),"degree"
 
 Sys.time()
 ```
-## 9.6. GSEA for loadings of PCA using TRcom
-### 9.6.1. GSEA TRcom for PCA loading (GSEA was performed using only TRcoms and distinguish differernt mode)
+## 9.6. GSEA using loadings of PC1~3 (investigate enrichment of only TRcoms)
+Two regulatory modes (activation or inhibition) were distinguished.
+### 9.6.1. perform GSEA
 ```{r GSEA_TRcom,warning=FALSE, message=FALSE,fig.height=6,fig.width=6,dpi=300}
-
 TRN_TRcom<-TRN
 TRN_TRcom<-TRN_TRcom[(TRN_TRcom$regulator %in% TRcom)&(TRN_TRcom$effect %in% c("+","-")),]
 TRN_TRcom$reg_eff<-NA
@@ -4348,9 +4105,6 @@ my_pca.coord[[1]]<-get_pca_var(res.pca.global_env)
 my_pca.coord[[2]]<-get_pca_var(res.pca.global_evo)
 my_pca.coord[[3]]<-get_pca_var(res.pca.global_mut)
 names(my_pca.coord)<-my_datasets
-j<-1
-
-my_fontsize<-16
 
 for (j in 1:length(my_datasets)){
   pca.var<-my_pca.coord[[j]]
@@ -4368,13 +4122,16 @@ for (j in 1:length(my_datasets)){
     gene_list<-na.omit(original_gene_list)
     # sort the list in decreasing order (required for clusterProfiler)
     gene_list = sort(gene_list, decreasing = TRUE)
+    set.seed(123)
     res_tfgsea <- GSEA(geneList     = gene_list,
                   TERM2GENE = dtrn_TRcom,
+                  seed=TRUE,
                    nPerm        = 10000,
                    minGSSize    = 5, # 5
                    maxGSSize    = 1000, # 100
                    pvalueCutoff = 1, # <------------ set 1 to obtain enrichment scores for all gene sets 
                    pAdjustMethod = "BH") #fdr
+    set.seed(NULL)
     gene_count<-res_tfgsea@result %>% group_by(ID) %>% summarise(count = sum(str_count(core_enrichment, "/")+1))
     dot_df<- left_join(res_tfgsea@result, gene_count, by = "ID") %>% mutate(GeneRatio = count/setSize)
     # dot_df<-dot_df[dot_df$count>4,]
@@ -4410,10 +4167,20 @@ for (j in 1:length(my_datasets)){
   }else{
     dTRcom_pca_gsea<-bind_rows(dTRcom_pca_gsea,figtemp2)
   }
-  
+}
+Sys.time()
+```
+### 9.6.2. visualization
+```{r GSEA_TRcom,warning=FALSE, message=FALSE,fig.height=6,fig.width=6,dpi=300}
+my_ds<-qw(Env,Evo,Mut)
+my_fontsize<-16
+my_pc<-qw(PC1,PC2,PC3)
+
+for (j in 1:length(my_ds)){
+  figtemp2<-dTRcom_pca_gsea[dTRcom_pca_gsea$dataset==my_ds[j],]
   figlist4<-list()
-  for(ii in 1:length(mypcs)){
-    k<-mypcs[ii]
+  for(ii in 1:length(my_pc)){
+    k<-my_pc[ii]
     temp<-figtemp2[figtemp2$PC==k,]
     temp<-temp[order(temp$enrichmentScore,decreasing = T),]
     p<-ggdotchart(figtemp2[figtemp2$PC==k,],x="Description",y="NES",
@@ -4427,7 +4194,7 @@ for (j in 1:length(my_datasets)){
       scale_x_discrete(labels=temp$regulator)+
       scale_y_continuous(expand = expansion(mult = c(0.1, 0.1)))+
       scale_size_continuous(limits = c(0,1),breaks=c(0.2,0.4,0.6,0.8))+
-      annotate("text",x=Inf,y=Inf,label=paste(mypcs[ii],"(",my_datasets[j],")"),hjust = 1,vjust = 1,size=5)+
+      annotate("text",x=Inf,y=Inf,label=paste(my_pc[ii],"(",my_ds[j],")"),hjust = 1,vjust = 1,size=5)+
        # scale_size_area(max_size = 4,breaks=c(0.3,0.4,0.5,0.6,0.7,0.8)) +
       guides(size = guide_legend(title= "Gene ratio",label.theme = element_text(angle = 0,size=my_fontsize),title.position = "left"))+
       scale_colour_continuous(limits = c(-4.1,log10(0.05)), breaks = c(-4,-3,-2,-1),
@@ -4449,12 +4216,9 @@ for (j in 1:length(my_datasets)){
                left=textGrob("Normalized enrichment score", rot=90,gp=gpar(fontsize=20)),
                layout_matrix=lay)
 }
-
-
-
 Sys.time()
 ```
-### 9.6.2. Venn diagram of enriched regulation of TRcom in PC1~PC3
+### 9.6.3. Venn diagram of enriched regulation in PC1~PC3
 PC1~PC3
 ```{r GSEA_TRcom,warning=FALSE, message=FALSE,fig.height=3,fig.width=3,dpi=300}
 # venn
@@ -4490,7 +4254,7 @@ for(i in 1:length(venn$regionData$item)){
 
 Sys.time()
 ```
-### 9.6.3. Venn diagram of enriched regulation of TRcom in PC1~PC3
+### 9.6.4. Venn diagram of enriched regulation in PC1
 PC1 only
 ```{r GSEA_TRcom,warning=FALSE, message=FALSE,fig.height=3,fig.width=3,dpi=300}
 # venn
@@ -4525,10 +4289,10 @@ for(i in 1:length(venn$regionData$item)){
 
 Sys.time()
 ```
-## 9.7. GSEA for loadings of PCA using all TR
-### 9.7.1. GSEA TR all for PCA loading (GSEA was performed using all TR (including TRcoms and other TRs) and distinguish differernt mode)
+## 9.7. GSEA using loadings of PC1~3 (investigate enrichment of all TRs)
+Two regulatory modes (activation or inhibition) were distinguished.
+### 9.7.1. perform GSEA
 ```{r GSEA_allTR,warning=FALSE, message=FALSE,fig.height=7,fig.width=14,dpi=300}
-
 TRN_TRall<-TRN
 TRN_TRall<-TRN_TRall[TRN_TRall$effect %in% c("+","-"),]
 TRN_TRall$reg_eff<-NA
@@ -4549,9 +4313,6 @@ my_pca.coord[[1]]<-get_pca_var(res.pca.global_env)
 my_pca.coord[[2]]<-get_pca_var(res.pca.global_evo)
 my_pca.coord[[3]]<-get_pca_var(res.pca.global_mut)
 names(my_pca.coord)<-my_datasets
-j<-1
-
-my_fontsize<-20
 
 for (j in 1:length(my_datasets)){
   pca.var<-my_pca.coord[[j]]
@@ -4569,13 +4330,16 @@ for (j in 1:length(my_datasets)){
     gene_list<-na.omit(original_gene_list)
     # sort the list in decreasing order (required for clusterProfiler)
     gene_list = sort(gene_list, decreasing = TRUE)
+    set.seed(123)
     res_tfgsea <- GSEA(geneList     = gene_list,
                   TERM2GENE = dTRN_TRall,
+                  seed=TRUE,
                    nPerm        = 10000,
                    minGSSize    = 5, # 5
                    maxGSSize    = 1000, # 100
                    pvalueCutoff = 1, # <------------ set 1 to obtain enrichment scores for all gene sets 
                    pAdjustMethod = "BH") #fdr
+    set.seed(NULL)
     gene_count<-res_tfgsea@result %>% group_by(ID) %>% summarise(count = sum(str_count(core_enrichment, "/")+1))
     dot_df<- left_join(res_tfgsea@result, gene_count, by = "ID") %>% mutate(GeneRatio = count/setSize)
     # dot_df<-dot_df[dot_df$count>4,]
@@ -4613,10 +4377,20 @@ for (j in 1:length(my_datasets)){
   }else{
     dTRall_pca_gsea<-bind_rows(dTRall_pca_gsea,figtemp2)
   }
-  
+}
+Sys.time()
+```
+### 9.7.2. visualization
+```{r GSEA_allTR,warning=FALSE, message=FALSE,fig.height=7,fig.width=14,dpi=300}
+my_ds<-qw(Env,Evo,Mut)
+my_fontsize<-20
+my_pc<-qw(PC1,PC2,PC3)
+
+for (j in 1:length(my_ds)){
+  figtemp2<-dTRall_pca_gsea[dTRall_pca_gsea$dataset==my_ds[j],]
   figlist4<-list()
-  for(ii in 1:length(mypcs)){
-    k<-mypcs[ii]
+  for(ii in 1:length(my_pc)){
+    k<-my_pc[ii]
     temp<-figtemp2[figtemp2$PC==k,]
     temp<-temp[order(temp$enrichmentScore,decreasing = T),]
     p<-ggdotchart(figtemp2[figtemp2$PC==k,],x="Description",y="NES",
@@ -4631,8 +4405,7 @@ for (j in 1:length(my_datasets)){
       scale_x_discrete(labels=temp$label)+
       scale_y_continuous(breaks = get_breaks(by = 2, from = -2),expand = expansion(mult = c(0.1, 0.1)))+
       scale_size_continuous(limits = c(0,1),breaks=c(0.2,0.4,0.6,0.8))+
-      # annotate("text",x=Inf,y=Inf,label=paste(mypcs[ii],"(",my_datasets[j],")"),hjust = 1,vjust = 1,size=5)+
-      annotate("text",x=Inf,y=Inf,label=paste(mypcs[ii],"(",my_datasets[j],")",sep=""),hjust = 1,vjust = 1,size=8)+
+      annotate("text",x=Inf,y=Inf,label=paste(my_pc[ii],"(",my_ds[j],")",sep=""),hjust = 1,vjust = 1,size=8)+
        # scale_size_area(max_size = 4,breaks=c(0.3,0.4,0.5,0.6,0.7,0.8)) +
       guides(size = guide_legend(title= "Gene ratio",label.theme = element_text(angle = 0,size=my_fontsize),title.position = "left"))+
       scale_colour_continuous(limits = c(-4.1,log10(0.05)), breaks = c(-4,-3,-2,-1),
@@ -4655,19 +4428,17 @@ for (j in 1:length(my_datasets)){
                layout_matrix=lay)
 }
 
-for(i in my_datasets){
-  for(j in mypcs){
+for(i in my_ds){
+  for(j in my_pc){
     k<-length(unique(dTRall_pca_gsea[(dTRall_pca_gsea$dataset==i)&(dTRall_pca_gsea$PC==j)&(dTRall_pca_gsea$NES>0),]$Description))
     l<-length(unique(dTRall_pca_gsea[(dTRall_pca_gsea$dataset==i)&(dTRall_pca_gsea$PC==j)&(dTRall_pca_gsea$NES<0),]$Description))
     print(paste("# of TRs enriched in pos. of",j,"in",i,":",k))
     print(paste("# of TRs enriched in neg. of",j,"in",i,":",l))
   }
 }
-
-
 Sys.time()
 ```
-### 9.7.2. Venn diagram of enriched regulation of TRs in PC1~PC3
+### 9.7.3. Venn diagram of enriched regulation in PC1~PC3
 PC1~PC3
 ```{r GSEA_allTR,warning=FALSE, message=FALSE,fig.height=3,fig.width=3,dpi=300}
 # venn
@@ -4703,7 +4474,7 @@ for(i in 1:length(venn$regionData$item)){
 
 Sys.time()
 ```
-### 9.7.3. Venn diagram of enriched regulation of TR in PC1~PC3
+### 9.7.4. Venn diagram of enriched regulation in PC1
 PC1 only
 ```{r GSEA_allTR,warning=FALSE, message=FALSE,fig.height=3,fig.width=3,dpi=300}
 # venn
@@ -4738,46 +4509,8 @@ for(i in 1:length(venn$regionData$item)){
 
 Sys.time()
 ```
-### 9.7.4. Venn diagram of enriched regulation of TR in PC1~PC3
-PC1 for Env and PC2 for Evo&Mut
-```{r GSEA_allTR,warning=FALSE, message=FALSE,fig.height=3,fig.width=3,dpi=300}
-# venn
-venn_all<-list(
-  Evo=dTRall_pca_gsea[(dTRall_pca_gsea$dataset=="Evo")&(dTRall_pca_gsea$PC=="PC1"),]$ID,
-  Env=dTRall_pca_gsea[(dTRall_pca_gsea$dataset=="Env")&(dTRall_pca_gsea$PC=="PC2"),]$ID,
-  Mut=dTRall_pca_gsea[(dTRall_pca_gsea$dataset=="Mut")&(dTRall_pca_gsea$PC=="PC2"),]$ID
-)
-# ggVennDiagram(figtemp)
-venn <- process_data(Venn(venn_all))
-venn$regionData$name
-venn$regionData$count
-# venn$regionData$item
-v<-venneuler(c(Evo=length(venn$regionData$item[[which(venn$regionData$name=="Evo")]]),
-               Env=length(venn$regionData$item[[which(venn$regionData$name=="Env")]]),
-               Mut=length(venn$regionData$item[[which(venn$regionData$name=="Mut")]]),
-               "Evo&Env"=length(venn$regionData$item[[which(venn$regionData$name=="Evo/Env")]]),
-             "Env&Mut"=length(venn$regionData$item[[which(venn$regionData$name=="Env/Mut")]]),
-               "Mut&Evo"=length(venn$regionData$item[[which(venn$regionData$name=="Evo/Mut")]]),
-             "Evo&Env&Mut"=length(venn$regionData$item[[which(venn$regionData$name=="Evo/Env/Mut")]])))
-v$labels<-c("","","")
-
-par(mar=c(0, 0, 0, 0)) # Make large margins
-plot(v,col = c("#F8766D", "#619CFF", "#00BA38"), quantities = TRUE) # Evo(red), Env(blue), Mut(green)
-  # text(x=v$centers[1,1]-0.2, y=v$centers[1,2]-0.24, labels='Evo')+ # Evo label (reg 1)
-  # text(x=v$centers[1,1]+0.3, y=v$centers[1,2]+0.3, labels='Env')+ # Env label (reg 2)
-  # text(x=v$centers[1,1]-0.38, y=v$centers[1,2]+0.3, labels='Mut') # Mut label (reg 3)
-
-for(i in 1:length(venn$regionData$item)){
-  print(paste(venn$regionData$name[[i]],paste(venn$regionData$item[[i]],collapse=", "),sep=": "))
-}
-
-Sys.time()
-```
-
-
-
 ## 9.8. PCA for the Env_wo_abx dataset
-#### 9.8.1. Detect outliers in PC1~PC3
+### 9.8.1. Detect outliers in PC1~PC3
 ```{r PCA_Env_wo_abx,warning=FALSE, message=FALSE,fig.height=4,fig.width=12,dpi=300}
 temp0<-log_tpm_pl.pr2_wo_abx[log_tpm_pl.pr2_wo_abx$Bnb %in% dBnb.comp$Bnb,]
 temp0<-temp0[order(temp0$Bnb,decreasing = F),]
@@ -4800,7 +4533,7 @@ if(length(my_tmp)>0){
 print(paste("Outliers: ",length(env_wo_abx_outlier[!is.na(env_wo_abx_outlier)]),"out of",nrow(my_res$x)))
 Sys.time()
 ```
-#### 9.8.2. Remove outliers if it is necessary and examine PCA
+### 9.8.2. Remove outliers if it is necessary and examine PCA
 ```{r PCA_Env_wo_abx,warning=FALSE, message=FALSE,fig.height=3,fig.width=3,dpi=300}
 mypcs<-paste("PC",seq(1:3),sep="")
 temp<-log_tpm_pl.pr2_wo_abx[log_tpm_pl.pr2_wo_abx$Bnb %in% dBnb.comp$Bnb,]
@@ -4870,7 +4603,7 @@ pca.glob.var_env_wo_abx<-get_pca_var(res.pca.global_env_wo_abx)
 
 Sys.time()
 ```
-#### 9.8.3. Correlation between rotations in PC1~3 of Env_wo_abx and those of Evo or Mut
+### 9.8.3. Correlation between rotations in PC1~3 of Env_wo_abx and those of Evo or Mut
 ```{r PCA_Env_wo_abx,warning=FALSE, message=FALSE,fig.height=4.5,fig.width=11,dpi=300}
 # Env_wo_abx vs. Evo
 temp5<-data.frame(Env_wo_abx_PC=rep(seq(1,3),each=3),Evo_PC=rep(seq(1,3),3),Cor=NA,p.value=NA)
@@ -4997,8 +4730,11 @@ grid.arrange(p4,p5,p6,as_ggplot(leg2),widths=c(1,1,1,0.4),nrow=1)
 
 Sys.time()
 ```
+#
+#
+#
 # 10. Gene Ontology
-## 10.1. Create custom GO slim (a subset of GO, dfgoslim2, dfgoslim23)
+## 10.1. Create a custom GO slim (a subset of GO, dfgoslim2, dfgoslim23)
 method=Wang, threshold=0.7. score= size of GO
 ```{r GO_slim,warning=FALSE, message=FALSE,fig.height=6,fig.width=8,dpi=300}
 gocategory<-qw(BP,CC,MF)
@@ -5189,14 +4925,13 @@ my_tmp$`Term Name`<-str_replace_all(string = my_tmp$`Term Name`,pattern = "ATP-b
 ggtexttable(my_tmp,rows=NULL)
 Sys.time()
 ```
-
 ### 10.3.2. all 
 ```{r GO_slim,warning=FALSE, message=FALSE,fig.height=24,fig.width=10,dpi=300}
 ggtexttable(df_DMall_gocat[,which(colnames(df_DMall_gocat) %in% c("ID","Domain","Term Name","Count"))],rows=NULL)
 Sys.time()
 ```
 ## 10.4. Enrichment analysis for DMs using GO slim (using all three categories)
-### 10.4.1. GSEA in GO for the Env dataset
+### 10.4.1. perform GSEA for the Env dataset
 ```{r GO_slim,warning=FALSE, message=FALSE,fig.height=10,fig.width=5,dpi=300}
 my_DM<-"DMenv"
 gene_list <- df_DMall[,colnames(df_DMall)==my_DM] # Create a vector of the gene universe
@@ -5206,14 +4941,16 @@ my_t2g<-dfgoslim3 %>% select(go,Bnb)
 # my_t2g<-dfgoslim3[dfgoslim3$Category=="BP",] %>% select(go,Bnb)
 
 ## GO analysis
+set.seed(123)
 my_res <- GSEA(geneList     = gene_list,
               TERM2GENE = my_t2g,
+              seed=TRUE,
                nPerm        = 10000,
                minGSSize    = 5, # 5
                maxGSSize    = 300, # 300
                pvalueCutoff = 1, # <------------ set 1 to obtain enrichment scores for all gene sets 
                pAdjustMethod = "BH") #fdr
-
+set.seed(NULL)
 gene_count<-my_res@result %>% group_by(ID) %>% summarise(count = sum(str_count(core_enrichment, "/")+1))
 dot_df<- left_join(my_res@result, gene_count, by = "ID") %>% mutate(GeneRatio = count/setSize)
 my_tmp<-dfgoslim2 %>% select(go,term,Category)
@@ -5229,7 +4966,7 @@ dgsea_go_env_all$term_cat<-paste(dgsea_go_env_all$term,"(",dgsea_go_env_all$Cate
 
 Sys.time()
 ```
-### 10.4.2. GSEA in GO for the Evo dataset
+### 10.4.2. perform GSEA for the Evo dataset
 ```{r GO_slim,warning=FALSE, message=FALSE,fig.height=10,fig.width=5,dpi=300}
 my_DM<-"DMevo"
 gene_list <- df_DMall[,colnames(df_DMall)==my_DM] # Create a vector of the gene universe
@@ -5239,14 +4976,16 @@ my_t2g<-dfgoslim3 %>% select(go,Bnb)
 # my_t2g<-dfgoslim3[dfgoslim3$Category=="BP",] %>% select(go,Bnb)
 
 ## GO analysis
+set.seed(123)
 my_res <- GSEA(geneList     = gene_list,
               TERM2GENE = my_t2g,
+              seed=TRUE,
                nPerm        = 10000,
                minGSSize    = 5, # 5
                maxGSSize    = 300, # 300
                pvalueCutoff = 1, # <------------ set 1 to obtain enrichment scores for all gene sets 
                pAdjustMethod = "BH") #fdr
-
+set.seed(NULL)
 gene_count<-my_res@result %>% group_by(ID) %>% summarise(count = sum(str_count(core_enrichment, "/")+1))
 dot_df<- left_join(my_res@result, gene_count, by = "ID") %>% mutate(GeneRatio = count/setSize)
 my_tmp<-dfgoslim2 %>% select(go,term,Category)
@@ -5261,7 +5000,7 @@ dgsea_go_evo_all<-dot_df
 dgsea_go_evo_all$term_cat<-paste(dgsea_go_evo_all$term,"(",dgsea_go_evo_all$Category,")",sep="")
 Sys.time()
 ```
-### 10.4.3. GSEA in GO for the Mut dataset
+### 10.4.3. perform GSEA for the Mut dataset
 ```{r GO_slim,warning=FALSE, message=FALSE,fig.height=10,fig.width=5,dpi=300}
 my_DM<-"DMmut"
 gene_list <- df_DMall[,colnames(df_DMall)==my_DM] # Create a vector of the gene universe
@@ -5271,14 +5010,16 @@ my_t2g<-dfgoslim3 %>% select(go,Bnb)
 # my_t2g<-dfgoslim3[dfgoslim3$Category=="BP",] %>% select(go,Bnb)
 
 ## GO analysis
+set.seed(123)
 my_res <- GSEA(geneList     = gene_list,
               TERM2GENE = my_t2g,
+              seed=TRUE,
                nPerm        = 10000,
                minGSSize    = 5, # 5
                maxGSSize    = 300, # 300
                pvalueCutoff = 1, # <------------ set 1 to obtain enrichment scores for all gene sets 
                pAdjustMethod = "BH") #fdr
-
+set.seed(NULL)
 gene_count<-my_res@result %>% group_by(ID) %>% summarise(count = sum(str_count(core_enrichment, "/")+1))
 dot_df<- left_join(my_res@result, gene_count, by = "ID") %>% mutate(GeneRatio = count/setSize)
 my_tmp<-dfgoslim2 %>% select(go,term,Category)
@@ -5413,10 +5154,8 @@ plot(v,col = c("#F8766D", "#619CFF", "#00BA38"), quantities = TRUE) # Evo(red), 
 
 Sys.time()
 ```
-
-
 ## 10.5. Enrichment analysis for loadings in PC1-3 using GO slim
-### 10.5.1. GSEA in GO for the Env dataset
+### 10.5.1. perform GSEA for the Env dataset
 ```{r GO_slim,warning=FALSE, message=FALSE,fig.height=10,fig.width=10,dpi=300}
 my_t2g<-dfgoslim3 %>% select(go,Bnb)
 # my_t2g<-dfgoslim3[dfgoslim3$Category=="BP",] %>% select(go,Bnb)
@@ -5445,13 +5184,16 @@ for(i in mypcs){
   gene_list<-na.omit(original_gene_list)
   # sort the list in decreasing order (required for clusterProfiler)
   gene_list = sort(gene_list, decreasing = TRUE)
+  set.seed(123)
   my_res<- GSEA(geneList     = gene_list,
                 TERM2GENE = my_t2g,
+                seed=TRUE,
                  nPerm        = 10000,
                  minGSSize    = 5, # 5
                  maxGSSize    = 1000, # 100
                  pvalueCutoff = 1, # <------------ set 1 to obtain enrichment scores for all gene sets 
                  pAdjustMethod = "BH") #fdr
+  set.seed(NULL)
   gene_count<-my_res@result %>% group_by(ID) %>% summarise(count = sum(str_count(core_enrichment, "/")+1))
   dot_df<- left_join(my_res@result, gene_count, by = "ID") %>% mutate(GeneRatio = count/setSize)
   # dot_df<-dot_df[dot_df$count>4,]
@@ -5518,7 +5260,7 @@ for(ii in 1:length(mypcs)){
 }
 Sys.time()
 ```
-### 10.5.2. GSEA in GO for the Evo dataset
+### 10.5.2. perform GSEA for the Evo dataset
 ```{r GO_slim,warning=FALSE, message=FALSE,fig.height=10,fig.width=10,dpi=300}
 my_t2g<-dfgoslim3 %>% select(go,Bnb)
 my_fontsize<-20
@@ -5538,13 +5280,16 @@ for(i in mypcs){
   gene_list<-na.omit(original_gene_list)
   # sort the list in decreasing order (required for clusterProfiler)
   gene_list = sort(gene_list, decreasing = TRUE)
+  set.seed(123)
   my_res<- GSEA(geneList     = gene_list,
                 TERM2GENE = my_t2g,
+                seed=TRUE,
                  nPerm        = 10000,
                  minGSSize    = 5, # 5
                  maxGSSize    = 1000, # 100
                  pvalueCutoff = 1, # <------------ set 1 to obtain enrichment scores for all gene sets 
                  pAdjustMethod = "BH") #fdr
+  set.seed(NULL)
   gene_count<-my_res@result %>% group_by(ID) %>% summarise(count = sum(str_count(core_enrichment, "/")+1))
   dot_df<- left_join(my_res@result, gene_count, by = "ID") %>% mutate(GeneRatio = count/setSize)
   # dot_df<-dot_df[dot_df$count>4,]
@@ -5618,7 +5363,7 @@ for(ii in 1:length(mypcs)){
 }
 Sys.time()
 ```
-### 10.5.3. GSEA in GO for the Mut dataset
+### 10.5.3. perform GSEA for the Mut dataset
 ```{r GO_slim,warning=FALSE, message=FALSE,fig.height=10,fig.width=10,dpi=300}
 my_t2g<-dfgoslim3 %>% select(go,Bnb)
 my_fontsize<-20
@@ -5638,13 +5383,16 @@ for(i in mypcs){
   gene_list<-na.omit(original_gene_list)
   # sort the list in decreasing order (required for clusterProfiler)
   gene_list = sort(gene_list, decreasing = TRUE)
+  set.seed(123)
   my_res<- GSEA(geneList     = gene_list,
                 TERM2GENE = my_t2g,
+                seed=TRUE,
                  nPerm        = 10000,
                  minGSSize    = 5, # 5
                  maxGSSize    = 1000, # 100
                  pvalueCutoff = 1, # <------------ set 1 to obtain enrichment scores for all gene sets 
                  pAdjustMethod = "BH") #fdr
+  set.seed(NULL)
   gene_count<-my_res@result %>% group_by(ID) %>% summarise(count = sum(str_count(core_enrichment, "/")+1))
   dot_df<- left_join(my_res@result, gene_count, by = "ID") %>% mutate(GeneRatio = count/setSize)
   # dot_df<-dot_df[dot_df$count>4,]
@@ -5711,7 +5459,7 @@ for(ii in 1:length(mypcs)){
 }
 Sys.time()
 ```
-### 10.5.4. barplot
+### 10.5.4. Visualization
 ```{r GO_slim,warning=FALSE, message=FALSE,fig.height=6,fig.width=4.5,dpi=300}
 my_df<-data.frame(name=paste(rep(qw(Env,Evo,Mut),each=6),rep(rep(qw(PC1,PC2,PC3),each=2),3),rep(qw(Pos,Neg),9),sep="_"),
                   dataset=NA,pc=NA,sign=NA,growth=0,starvation=0,others=0,total=0)
@@ -5829,6 +5577,9 @@ my_df$`Term Name`<-str_replace_all(string = my_df$`Term Name`,pattern = "ATP-bin
 ggtexttable(my_df,rows=NULL)
 Sys.time()
 ```
+#
+#
+#
 # 11. Noise-Plasticity Coupling
 ## 11.1. The Noise_ch dataset
 Taniguchi 2010, Science
@@ -6107,7 +5858,7 @@ p7+p8+p9
 
 Sys.time()
 ```
-
+### 11.1.4. 
 ```{r Noise,warning=FALSE, message=FALSE,fig.height=3,fig.width=3,dpi=300}
 my_tmp<-df_tani[!is.na(df_tani$TRcomflag2),]
 my_comparisons <- list( c("TRcom-containing", "TRcom-less"), c("TRcom-containing", "Null"), c("TRcom-less", "Null") )
@@ -6117,7 +5868,9 @@ ggboxplot(my_tmp[my_tmp$HL_label=="High",],x="TRcomflag2",y="TNDM",xlab="",ylab=
 ggscatter(my_tmp[my_tmp$HL_label=="High",],x="Count.allregs",y="TNDM",size=0.5,alpha=0.5,cor.coef = T)
 Sys.time()
 ```
-
+#
+#
+#
 # 14. The Prtn dataset
 Schmidt 2016 Nature biotechnology
 https://www.nature.com/articles/nbt.3418#Sec24
@@ -6178,8 +5931,6 @@ plot(v,col = v$colors, quantities = TRUE) # Three(gray),
 
 Sys.time()
 ```
-
-
 ### 14.3. DM
 #### 14.3.1. Calc DM
 ```{r Prtn,warning=FALSE, message=FALSE,fig.height=2.5,fig.width=3,dpi=300}
@@ -6542,9 +6293,9 @@ leg2 <- ggpubr::get_legend(q2)
 grid.arrange(p4,p5,p6,as_ggplot(leg2),widths=c(1,1,1,0.4),nrow=1)
 Sys.time()
 ```
-
-
-
+#
+#
+#
 # 15. The Strs dataset
 Maeda & Iwasawa 2020 Nature communications
 Transcriptome data of mutants under a non-stressful condition.
@@ -7273,8 +7024,9 @@ p2<-ggboxplot(my_df3,x="Type",y="log2_fold_change",color = "Type",size=1,
 p1+p2
 Sys.time()
 ```
-
-
+#
+#
+#
 # 16. The Strs_hp and Strs_he dataset
 Horinouchi 2017
 https://www.nature.com/articles/s41598-017-14335-7
@@ -7670,7 +7422,6 @@ leg2 <- ggpubr::get_legend(q2)
 grid.arrange(p4,p5,p6,as_ggplot(leg2),widths=c(1,1,1,0.4),nrow=1)
 Sys.time()
 ```
-
 ## 16.2. The Strs_he dataset
 Analysis for evolvability
 Transcriptome data of mutants under a non-stressful condition
@@ -8031,10 +7782,10 @@ leg2 <- ggpubr::get_legend(q2)
 grid.arrange(p4,p5,p6,as_ggplot(leg2),widths=c(1,1,1,0.4),nrow=1)
 Sys.time()
 ```
-
-
-
-# 17. Bow-tie deconvolution
+#
+#
+#
+# 17. Bow-tie decomposition
 The formal bow-tie deconvolution was defined in https://ieeexplore.ieee.org/document/5977625
 The code is based on https://royalsocietypublishing.org/doi/10.1098/rsif.2021.0069
 ## 17.1. Load tables of RegulonDB Cell Sensing
@@ -8397,7 +8148,6 @@ p
 
 Sys.time()
 ```
-
 ## 17.9 Impact of Sensory Regulators on DM values
 ```{r TRN,warning=FALSE, message=FALSE,fig.height=3.1,fig.width=6,dpi=300}
 my_df<-df.regcount.subcomp
@@ -8444,13 +8194,55 @@ ggscatter(my_df[my_df$Count.allregs==my_n,],y=my_y,x="NonTRcomSRcount",xlab="Num
 
 Sys.time()
 ```
+## 17.10 Enrichment analysis (Hypergeometric test) for TRcom and TRhigh
+Testing whether TRcoms and TRhghs are enriched in the SCC sector
+```{r TRN,warning=FALSE, message=FALSE,fig.height=3.1,fig.width=6,dpi=300}
+## TERM2GENE
+my_t2g<-df_bt[df_bt$regulator_flag=="TR",] %>% select(bt_role,node)
+## TRcom
+my_gene<-TRcom
+my_res<-enricher(gene = my_gene,pAdjustMethod = "BH",pvalueCutoff = 1,TERM2GENE = my_t2g)
+my_df<-my_res@result
+my_df$TR<-"TRcom"
 
+## TRhigh
+my_gene<-TRhigh
+my_res<-enricher(gene = my_gene,pAdjustMethod = "BH",pvalueCutoff = 1,TERM2GENE = my_t2g)
+my_tmp<-my_res@result
+my_tmp$TR<-"TRhigh"
 
+my_df<-bind_rows(my_df,my_tmp)
+rownames(my_df)<-seq(1,nrow(my_df))
+my_df$qval.fin<-qvalue(my_df$pvalue)$qvalue
+my_df[my_df$qval.fin<0.05,]
+Sys.time()
+```
+## 17.11 Enrichment analysis (Hypergeometric test) for SR
+Testing whether TRs in SCC are enriched in SRs
+```{r TRN,warning=FALSE, message=FALSE,fig.height=3.1,fig.width=6,dpi=300}
+## TERM2GENE
+my_t2g<-df_bt[df_bt$regulator_flag=="TR",] %>% select(sensor_flag,node)
+## Gene
+my_gene<-df_bt[df_bt$bt_role=="core",]$node
+my_res<-enricher(gene = my_gene,pAdjustMethod = "BH",pvalueCutoff = 1,TERM2GENE = my_t2g)
+my_df<-my_res@result
+my_df
+Sys.time()
+```
+## 17.12 Number of SR in TRhigh or in TRcom
+```{r TRN,warning=FALSE, message=FALSE,fig.height=3.1,fig.width=6,dpi=300}
+# Number of SR in TRhigh
+my_df<-df_bt[df_bt$impact_flag %in% qw(TRhigh,TRcom),]
+print (paste("Number of SR & TRhigh: ",nrow(my_df[my_df$sensor_flag=="SR",]),sep=""))
 
+my_df<-df_bt[(df_bt$bt_role %in% qw(core,inp))&(df_bt$sensor_flag=="SR"),]
+print (paste("Number of SR in SCC and IN: ",nrow(my_df),sep=""))
+Sys.time()
+```
 
-
-
-
+#
+#
+#
 # 18. Summary
 ## 18.1. correlation between DM values
 ```{r Summary,warning=FALSE, message=FALSE,fig.height=3,fig.width=4,dpi=300}
@@ -8682,6 +8474,9 @@ Sys.time()
 ```
 
 
+#
+#
+#
 # 20. Output for supplementary tables
 ## 20.1. Output tables
 ```{r Out,warning=FALSE, message=FALSE,fig.height=6,fig.width=9,dpi=300}
