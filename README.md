@@ -1,5 +1,5 @@
 # Transcriptome Variability in E. coli
-
+[![DOI](https://zenodo.org/badge/778848296.svg)](https://doi.org/10.5281/zenodo.14241622)
 ## Descriptions of folders
 ENV_DataSet: the Env dataset comprising of transcriptome profiles (PRECISE 2.0) obtained from iModulonDB (http://imodulondb.org/)  
 EVO_DataSet: the Evo dataset comprising of transcriptome profiles obtained from Rousset et al (https://doi.org/10.1038/s41564-020-00839-y)  
